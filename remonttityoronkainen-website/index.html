@@ -42,6 +42,76 @@
     }
 
     /* ============================================
+       SCROLL PROGRESS BAR
+    ============================================ */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+      background-size: 200% 100%;
+      animation: shimmerBar 2s linear infinite;
+      z-index: 2000;
+      width: 0%;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 12px rgba(201,168,76,0.7);
+    }
+
+    @keyframes shimmerBar {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+
+    /* ============================================
+       CUSTOM CURSOR (desktop only)
+    ============================================ */
+    @media (pointer: fine) {
+      body { cursor: none; }
+      a, button, [onclick], .portfolio-item, .service-card { cursor: none; }
+    }
+
+    .cursor-dot {
+      position: fixed;
+      width: 7px; height: 7px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.15s ease, height 0.15s ease, opacity 0.15s ease;
+      mix-blend-mode: normal;
+    }
+
+    .cursor-ring {
+      position: fixed;
+      width: 38px; height: 38px;
+      border: 1.5px solid rgba(201,168,76,0.55);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+    }
+
+    .cursor-dot.hovering { width: 12px; height: 12px; }
+    .cursor-ring.hovering { width: 56px; height: 56px; border-color: var(--gold); }
+
+    /* ============================================
+       NOISE GRAIN OVERLAY
+    ============================================ */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9000;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 180px 180px;
+    }
+
+    /* ============================================
        SCROLLBAR
     ============================================ */
     ::-webkit-scrollbar { width: 6px; }
@@ -203,17 +273,67 @@
       overflow: hidden;
     }
 
+    /* Animated gradient mesh background */
     .hero-bg {
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(135deg, rgba(15,15,15,0.92) 0%, rgba(15,15,15,0.6) 50%, rgba(201,168,76,0.15) 100%),
+        radial-gradient(ellipse 80% 60% at 20% 40%, rgba(201,168,76,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 60%, rgba(201,168,76,0.10) 0%, transparent 55%),
+        radial-gradient(ellipse 100% 80% at 50% 100%, rgba(15,15,15,0.95) 0%, transparent 70%),
         url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&q=80&auto=format') center/cover no-repeat;
       transform: scale(1.05);
-      transition: transform 8s ease;
+      transition: transform 10s ease;
+      animation: heroBgPulse 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroBgPulse {
+      0%   { filter: brightness(0.72) saturate(1.1); }
+      100% { filter: brightness(0.88) saturate(1.3); }
     }
 
     #hero:hover .hero-bg { transform: scale(1); }
+
+    /* Animated decorative orbs */
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(80px);
+      opacity: 0;
+      animation: orbFadeIn 1.5s ease forwards;
+    }
+
+    .hero-orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(201,168,76,0.22) 0%, transparent 70%);
+      top: -100px; left: -100px;
+      animation-delay: 0.5s;
+      animation: orbFadeIn 2s ease 0.5s forwards, orbFloat1 12s ease-in-out 2s infinite;
+    }
+
+    .hero-orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+      bottom: 50px; right: -80px;
+      animation: orbFadeIn 2s ease 1s forwards, orbFloat2 15s ease-in-out 3s infinite;
+    }
+
+    @keyframes orbFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes orbFloat1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(40px, 30px) scale(1.08); }
+      66% { transform: translate(-20px, 50px) scale(0.95); }
+    }
+
+    @keyframes orbFloat2 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-30px, -40px) scale(1.1); }
+    }
 
     .hero-content {
       position: relative;
@@ -252,7 +372,25 @@
       animation: fadeInUp 0.8s ease 0.1s both;
     }
 
-    .hero-title .accent { color: var(--gold); }
+    .hero-title .accent {
+      background: linear-gradient(90deg,
+        var(--gold) 0%,
+        #f5d980 25%,
+        var(--gold) 50%,
+        #fff3b0 75%,
+        var(--gold) 100%);
+      background-size: 250% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmerText 4s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes shimmerText {
+      0%   { background-position: 0% center; }
+      100% { background-position: 250% center; }
+    }
 
     .hero-sub {
       font-size: clamp(1rem, 2vw, 1.2rem);
@@ -432,34 +570,63 @@
     }
 
     .service-card {
-      background: var(--dark-3);
+      background: rgba(36,36,36,0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       padding: 2.5rem 2rem;
       position: relative;
       overflow: hidden;
-      transition: background var(--transition);
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
       cursor: default;
+      border: 1px solid rgba(255,255,255,0.04);
     }
 
+    /* Top gold accent line */
     .service-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0;
       width: 100%;
       height: 2px;
-      background: var(--gold);
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+      background-size: 200% 100%;
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform var(--transition);
+      transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+      animation: none;
     }
 
-    .service-card:hover { background: #2a2a2a; }
-    .service-card:hover::before { transform: scaleX(1); }
+    /* Glow effect bottom-left */
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 140px; height: 140px;
+      background: radial-gradient(circle, rgba(201,168,76,0.18) 0%, transparent 70%);
+      transition: opacity var(--transition), transform var(--transition);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .service-card:hover {
+      background: rgba(42,42,42,0.9);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.15);
+    }
+    .service-card:hover::before {
+      transform: scaleX(1);
+      animation: shimmerBar 1.5s linear infinite;
+    }
+    .service-card:hover::after { opacity: 1; transform: scale(1.3); }
 
     .service-icon {
       font-size: 2.5rem;
       margin-bottom: 1.25rem;
       display: block;
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
     }
+
+    .service-card:hover .service-icon { transform: scale(1.18) rotate(-5deg); }
 
     .service-title {
       font-size: 1.15rem;
@@ -629,17 +796,36 @@
     .portfolio-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity var(--transition);
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
       display: flex;
       align-items: flex-end;
       padding: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.4s ease;
     }
 
     .portfolio-item:hover .portfolio-overlay { opacity: 1; }
 
-    .portfolio-overlay-content { }
+    .portfolio-overlay-content {
+      transform: translateY(16px);
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .portfolio-item:hover .portfolio-overlay-content { transform: translateY(0); }
+
+    /* Shine sweep on hover */
+    .portfolio-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(125deg, transparent 40%, rgba(201,168,76,0.08) 50%, transparent 60%);
+      background-size: 250% 100%;
+      background-position: 200% 0;
+      transition: background-position 0.6s ease;
+      pointer-events: none;
+    }
+
+    .portfolio-item:hover::after { background-position: -50% 0; }
 
     .portfolio-overlay-tag {
       font-size: 0.72rem;
@@ -785,16 +971,95 @@
       color: var(--gray);
     }
 
+    /* Testimonials carousel */
+    .testimonials-carousel {
+      position: relative;
+      overflow: hidden;
+      margin-top: 3.5rem;
+    }
+
+    .testimonials-track {
+      display: flex;
+      gap: 1.5rem;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .testimonial-card {
+      background: var(--dark-2);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem;
+      border-radius: 2px;
+      position: relative;
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+      flex: 0 0 calc(33.333% - 1rem);
+      min-width: calc(33.333% - 1rem);
+    }
+
+    .testimonial-card:hover {
+      border-color: rgba(201,168,76,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+
+    /* Big decorative quote mark */
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: -0.5rem; right: 1.25rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 7rem;
+      line-height: 1;
+      color: rgba(201,168,76,0.06);
+      pointer-events: none;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .carousel-dot {
+      width: 24px; height: 3px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.3s, width 0.3s;
+      border: none;
+      padding: 0;
+    }
+
+    .carousel-dot.active {
+      background: var(--gold);
+      width: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .testimonial-card {
+        flex: 0 0 calc(100% - 0rem);
+        min-width: calc(100% - 0rem);
+      }
+    }
+
     /* ============================================
        CTA BANNER
     ============================================ */
     #cta {
       padding: 5rem 2rem;
       background:
-        linear-gradient(135deg, rgba(201,168,76,0.18) 0%, rgba(15,15,15,0) 60%),
+        radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201,168,76,0.14) 0%, transparent 70%),
+        linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(15,15,15,0) 60%),
         var(--dark-2);
-      border-top: 1px solid rgba(201,168,76,0.15);
-      border-bottom: 1px solid rgba(201,168,76,0.15);
+      border-top: 1px solid rgba(201,168,76,0.2);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      animation: ctaGlow 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes ctaGlow {
+      0%   { box-shadow: inset 0 0 80px rgba(201,168,76,0.04); }
+      100% { box-shadow: inset 0 0 80px rgba(201,168,76,0.12); }
     }
 
     .cta-inner {
@@ -1119,13 +1384,13 @@
 
     .reveal {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(40px) scale(0.98);
+      transition: opacity 0.65s cubic-bezier(0.4,0,0.2,1), transform 0.65s cubic-bezier(0.4,0,0.2,1);
     }
 
     .reveal.visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
     /* ============================================
@@ -1177,6 +1442,12 @@
   </style>
 </head>
 <body>
+  <!-- Scroll progress bar -->
+  <div id="scroll-progress"></div>
+
+  <!-- Custom cursor (hidden on mobile/touch) -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
 
   <!-- ==================== NAVIGATION ==================== -->
   <nav id="navbar">
@@ -1211,6 +1482,8 @@
   <!-- ==================== HERO ==================== -->
   <section id="hero">
     <div class="hero-bg"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
 
     <div class="hero-content">
       <div class="hero-badge">
@@ -1507,41 +1780,48 @@
         <div class="divider" style="margin: 1.5rem auto;"></div>
       </div>
 
-      <div class="testimonials-grid reveal">
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">Kylpyhuoneremontti meni täysin aikataulussa ja lopputulos ylitti odotukset. Ammattitaitoista porukkaa alusta loppuun. Erityisesti pidimme siitä, miten siististi he pitivät työmaan.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">MK</div>
-            <div>
-              <div class="testimonial-name">Mari Korhonen</div>
-              <div class="testimonial-loc">Tampere, kylpyhuoneremontti 2024</div>
+      <div class="testimonials-carousel reveal" id="testimonialCarousel">
+        <div class="testimonials-track" id="testimonialTrack">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">Kylpyhuoneremontti meni täysin aikataulussa ja lopputulos ylitti odotukset. Ammattitaitoista porukkaa alusta loppuun. Erityisesti pidimme siitä, miten siististi he pitivät työmaan.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MK</div>
+              <div>
+                <div class="testimonial-name">Mari Korhonen</div>
+                <div class="testimonial-loc">Tampere, kylpyhuoneremontti 2024</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">Tilasimme keittiöremontin ja olemme erittäin tyytyväisiä. Hinta oli kilpailukykyinen, työ laadukasta ja kommunikointi sujuvaa. Suosittelen lämpimästi!</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">JP</div>
+              <div>
+                <div class="testimonial-name">Juhani Peltonen</div>
+                <div class="testimonial-loc">Lempäälä, keittiöremontti 2024</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">Täydellinen kokonaisremontti vanhaan omakotitaloon. Työrönkainen koordinoi kaikki alihankkijat ja pitikin budjetissa. Ei stressiä, vain upea lopputulos.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">AL</div>
+              <div>
+                <div class="testimonial-name">Anna & Lauri Mäkinen</div>
+                <div class="testimonial-loc">Nokia, kokonaisremontti 2023</div>
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">Tilasimme keittiöremontin ja olemme erittäin tyytyväisiä. Hinta oli kilpailukykyinen, työ laadukasta ja kommunikointi sujuvaa. Suosittelen lämpimästi!</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">JP</div>
-            <div>
-              <div class="testimonial-name">Juhani Peltonen</div>
-              <div class="testimonial-loc">Lempäälä, keittiöremontti 2024</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">Täydellinen kokonaisremontti vanhaan omakotitaloon. Työrönkainen koordinoi kaikki alihankkijat ja pitikin budjetissa. Ei stressiä, vain upea lopputulos.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">AL</div>
-            <div>
-              <div class="testimonial-name">Anna & Lauri Mäkinen</div>
-              <div class="testimonial-loc">Nokia, kokonaisremontti 2023</div>
-            </div>
-          </div>
+        <div class="carousel-dots" id="carouselDots">
+          <button class="carousel-dot active" onclick="goToSlide(0)"></button>
+          <button class="carousel-dot" onclick="goToSlide(1)"></button>
+          <button class="carousel-dot" onclick="goToSlide(2)"></button>
         </div>
       </div>
     </div>
@@ -1751,66 +2031,173 @@
 
   <!-- ==================== JAVASCRIPT ==================== -->
   <script>
-    // Navbar scroll behavior
+    /* ── Scroll progress bar ── */
+    const progressBar = document.getElementById('scroll-progress');
+    function updateProgress() {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = total > 0 ? (window.scrollY / total) * 100 : 0;
+      progressBar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+
+    /* ── Navbar scroll ── */
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 60) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-    });
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
 
-    // Mobile menu toggle
+    /* ── Mobile menu ── */
     function toggleMenu() {
       document.getElementById('mobileMenu').classList.toggle('open');
     }
 
-    // Smooth reveal on scroll
+    /* ── Custom cursor ── */
+    const dot  = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let mouseX = 0, mouseY = 0;
+    let ringX  = 0, ringY  = 0;
+
+    // Only activate on non-touch devices
+    if (window.matchMedia('(pointer: fine)').matches) {
+      dot.style.opacity  = '1';
+      ring.style.opacity = '1';
+
+      document.addEventListener('mousemove', e => {
+        mouseX = e.clientX; mouseY = e.clientY;
+        dot.style.left = mouseX + 'px';
+        dot.style.top  = mouseY + 'px';
+      });
+
+      // Smooth ring lag
+      function animateRing() {
+        ringX += (mouseX - ringX) * 0.14;
+        ringY += (mouseY - ringY) * 0.14;
+        ring.style.left = ringX + 'px';
+        ring.style.top  = ringY + 'px';
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+
+      // Hover expand
+      document.querySelectorAll('a, button, [onclick], .portfolio-item, .service-card').forEach(el => {
+        el.addEventListener('mouseenter', () => { dot.classList.add('hovering'); ring.classList.add('hovering'); });
+        el.addEventListener('mouseleave', () => { dot.classList.remove('hovering'); ring.classList.remove('hovering'); });
+      });
+
+      document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
+      document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; });
+    } else {
+      dot.style.display  = 'none';
+      ring.style.display = 'none';
+    }
+
+    /* ── Scroll reveal ── */
     const revealEls = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          // Stagger items inside the same parent
+          const siblings = entry.target.parentElement.querySelectorAll('.reveal');
+          let delay = 0;
+          siblings.forEach((sib, idx) => { if (sib === entry.target) delay = idx * 60; });
+          setTimeout(() => entry.target.classList.add('visible'), delay);
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-
+    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
     revealEls.forEach(el => observer.observe(el));
 
-    // Counter animation
-    function animateCounter(el, target, duration = 2000) {
+    /* ── Animated counters ── */
+    function animateCounter(el, target, suffix = '', decimals = 0, duration = 1800) {
       const start = performance.now();
-      const update = (time) => {
-        const elapsed = time - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const current = Math.round(eased * target);
-        el.textContent = current + (el.dataset.suffix || '');
-        if (progress < 1) requestAnimationFrame(update);
+      const update = (now) => {
+        const t = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - t, 3);
+        const val = ease * target;
+        el.textContent = (decimals ? val.toFixed(decimals) : Math.round(val)) + suffix;
+        if (t < 1) requestAnimationFrame(update);
       };
       requestAnimationFrame(update);
     }
 
-    // Animate stats when hero is visible
     let statsAnimated = false;
-    const statsObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && !statsAnimated) {
-        statsAnimated = true;
-        // No numeric-only counters needed here since they have +/★ suffixes
-      }
-    });
     const heroStats = document.querySelector('.hero-stats');
-    if (heroStats) statsObserver.observe(heroStats);
+    if (heroStats) {
+      new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && !statsAnimated) {
+          statsAnimated = true;
+          const nums = heroStats.querySelectorAll('.hero-stat-number');
+          // [0] 15+  [1] 350+  [2] 100%  [3] 4.9★
+          if (nums[0]) animateCounter(nums[0], 15, '+');
+          if (nums[1]) animateCounter(nums[1], 350, '+');
+          if (nums[2]) animateCounter(nums[2], 100, '%');
+          if (nums[3]) animateCounter(nums[3], 4.9, '★', 1);
+        }
+      }, { threshold: 0.5 }).observe(heroStats);
+    }
 
-    // Form submit
+    /* ── Testimonials auto-carousel ── */
+    const track = document.getElementById('testimonialTrack');
+    const dots  = document.querySelectorAll('.carousel-dot');
+    let current = 0;
+    let autoTimer;
+
+    function getSlideWidth() {
+      const card = track && track.querySelector('.testimonial-card');
+      if (!card) return 0;
+      const gap = 24; // 1.5rem
+      return card.offsetWidth + gap;
+    }
+
+    function goToSlide(n) {
+      if (!track) return;
+      current = n;
+      track.style.transform = `translateX(-${n * getSlideWidth()}px)`;
+      dots.forEach((d, i) => d.classList.toggle('active', i === n));
+      resetAuto();
+    }
+
+    function nextSlide() {
+      if (!track) return;
+      const total = track.querySelectorAll('.testimonial-card').length;
+      goToSlide((current + 1) % total);
+    }
+
+    function resetAuto() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(nextSlide, 5000);
+    }
+
+    if (track) {
+      resetAuto();
+      // Pause on hover
+      document.getElementById('testimonialCarousel').addEventListener('mouseenter', () => clearInterval(autoTimer));
+      document.getElementById('testimonialCarousel').addEventListener('mouseleave', resetAuto);
+      // Recalculate on resize
+      window.addEventListener('resize', () => goToSlide(current), { passive: true });
+    }
+
+    /* ── Magnetic CTA buttons ── */
+    document.querySelectorAll('.btn-primary').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r  = btn.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top  + r.height / 2;
+        const dx = (e.clientX - cx) * 0.25;
+        const dy = (e.clientY - cy) * 0.25;
+        btn.style.transform = `translate(${dx}px, ${dy}px) translateY(-2px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+
+    /* ── Form submit ── */
     function handleSubmit(e) {
       e.preventDefault();
       const btn = e.target.querySelector('.form-submit');
       btn.textContent = 'Lähetetään...';
       btn.disabled = true;
-
-      // Simulate sending
       setTimeout(() => {
         document.getElementById('contactForm').style.display = 'none';
         document.getElementById('formSuccess').classList.add('show');
