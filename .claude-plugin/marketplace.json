@@ -145,6 +145,13 @@
       },
       "source": "./plugins/security-guidance",
       "category": "security"
+    },
+    {
+      "name": "mcp-web-design-tools",
+      "description": "MCP servers for web design, productivity, and automation. Includes Notion, Figma, Puppeteer, Context7, and Sequential Thinking.",
+      "version": "1.0.0",
+      "source": "./plugins/mcp-web-design-tools",
+      "category": "productivity"
     }
   ]
 }
