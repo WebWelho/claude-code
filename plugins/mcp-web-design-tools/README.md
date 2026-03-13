@@ -48,6 +48,23 @@ Turvallinen tiedostojärjestelmän käyttö sallituissa hakemistoissa.
 
 **Ei vaadi API-avainta.**
 
+### Vercel (`@open-mcp/vercel`)
+Vercel-projektien, deploymenttien ja domainien hallinta.
+- Projektien listaus ja hallinta
+- Deploymenttien tila ja uudelleendeployaus
+- Domainien ja ymparistomuuttujien hallinta
+- Logien tarkastelu
+
+**Vaatii:** `VERCEL_TOKEN` - [Luo token Vercelin asetuksissa](https://vercel.com/account/tokens)
+
+### Next.js DevTools (`next-devtools-mcp`)
+Next.js-kehitystyokalut koodausagenteille.
+- Reittien ja komponenttien tarkastelu
+- Next.js-konfiguraation analysointi
+- Kehityspalvelimen integraatio (Next.js 16+ sisaltaa MCP:n oletuksena)
+
+**Ei vaadi API-avainta** - toimii paikallisesti kehityspalvelimen kanssa.
+
 ## Asennus
 
 1. Aseta tarvittavat ymparistomuuttujat:
@@ -56,6 +73,7 @@ Turvallinen tiedostojärjestelmän käyttö sallituissa hakemistoissa.
 export NOTION_API_KEY="ntn_xxxxxxxxxxxx"
 export FIGMA_ACCESS_TOKEN="figd_xxxxxxxxxxxx"
 export GITHUB_TOKEN="ghp_xxxxxxxxxxxx"
+export VERCEL_TOKEN="xxxxxxxxxxxx"
 ```
 
 2. Plugin aktivoituu automaattisesti kun se on marketplace.json:ssa.
@@ -69,6 +87,8 @@ export GITHUB_TOKEN="ghp_xxxxxxxxxxxx"
 - "Analysoi Figma-tiedoston komponenttirakenne ja luo React-komponentit"
 - "Luo uusi GitHub issue bugiraportille"
 - "Listaa projektin tiedostot ja etsi konfiguraatiot"
+- "Nayta Vercelin viimeisimmat deploymentit ja niiden tila"
+- "Tarkista Next.js-projektin reittirakenne"
 
 ## Lisapalvelimia harkittavaksi
 

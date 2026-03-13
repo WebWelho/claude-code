@@ -35,5 +35,19 @@
     "command": "npx",
     "args": ["-y", "@modelcontextprotocol/server-filesystem", "${CLAUDE_PROJECT_DIR}"],
     "env": {}
+  },
+
+  "vercel": {
+    "command": "npx",
+    "args": ["-y", "@open-mcp/vercel"],
+    "env": {
+      "VERCEL_TOKEN": "${VERCEL_TOKEN}"
+    }
+  },
+
+  "next-devtools": {
+    "command": "npx",
+    "args": ["-y", "next-devtools-mcp"],
+    "env": {}
   }
 }
