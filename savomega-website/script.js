@@ -94,6 +94,56 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { passive: true });
 
+    // === Google Reviews Carousel ===
+    const track = document.getElementById('reviewTrack');
+    const prevBtn = document.getElementById('reviewPrev');
+    const nextBtn = document.getElementById('reviewNext');
+    if (track && prevBtn && nextBtn) {
+        let pos = 0;
+        const card = track.querySelector('.google-review-card');
+        const getCardWidth = () => {
+            if (!card) return 360;
+            const style = window.getComputedStyle(track);
+            const gap = parseFloat(style.gap) || 20;
+            return card.offsetWidth + gap;
+        };
+        const getMaxPos = () => {
+            const cards = track.querySelectorAll('.google-review-card');
+            const wrapper = track.parentElement;
+            const totalWidth = cards.length * getCardWidth();
+            return Math.max(0, totalWidth - wrapper.offsetWidth);
+        };
+        const slide = (dir) => {
+            const step = getCardWidth();
+            const max = getMaxPos();
+            pos = Math.max(0, Math.min(pos + dir * step, max));
+            track.style.transform = `translateX(-${pos}px)`;
+        };
+        prevBtn.addEventListener('click', () => slide(-1));
+        nextBtn.addEventListener('click', () => slide(1));
+
+        // Touch/swipe support
+        let startX = 0, startPos = 0, dragging = false;
+        track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; startPos = pos; dragging = true; }, { passive: true });
+        track.addEventListener('touchmove', (e) => {
+            if (!dragging) return;
+            const diff = startX - e.touches[0].clientX;
+            const max = getMaxPos();
+            pos = Math.max(0, Math.min(startPos + diff, max));
+            track.style.transition = 'none';
+            track.style.transform = `translateX(-${pos}px)`;
+        }, { passive: true });
+        track.addEventListener('touchend', () => {
+            dragging = false;
+            track.style.transition = '';
+            // Snap to nearest card
+            const step = getCardWidth();
+            pos = Math.round(pos / step) * step;
+            pos = Math.max(0, Math.min(pos, getMaxPos()));
+            track.style.transform = `translateX(-${pos}px)`;
+        });
+    }
+
     // === Contact Form ===
     const form = document.getElementById('contactForm');
     if (form) {
