@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LVI Kruunu | Ammattilaisen LVI-palvelut Tampereella – Päivystys 24/7</title>
+    <meta name="description" content="Tampereen luotetuin putkimies. 5 tähden Google-arviot. Päivystys 24/7. Kaikki LVI-työt alkaen 65€/h. Soita nyt!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Sticky Top Bar -->
+<div class="top-bar">
+    <div class="container top-bar-content">
+        <span class="top-bar-text">
+            <span class="pulse-dot"></span>
+            Päivystys 24/7 – Soita nyt, paikalla tänään
+        </span>
+        <a href="tel:+358505864771" class="top-bar-phone">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            050 586 4771
+        </a>
+    </div>
+</div>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+    <div class="container nav-content">
+        <a href="#" class="logo">
+            <span class="logo-crown">👑</span>
+            <div class="logo-text">LVI<span>Kruunu</span></div>
+        </a>
+        <div class="nav-links" id="navLinks">
+            <a href="#palvelut">Palvelut</a>
+            <a href="#miksi-me">Miksi me</a>
+            <a href="#hinnasto">Hinnasto</a>
+            <a href="#arvostelut">Arvostelut</a>
+            <a href="#ukk">UKK</a>
+        </div>
+        <a href="tel:+358505864771" class="nav-cta">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            Soita nyt
+        </a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Avaa valikko">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- HERO – Full viewport with background image -->
+<section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-particles" id="particles"></div>
+    <div class="container hero-content">
+        <div class="hero-badge animate-in">
+            <span class="badge-star">★★★★★</span>
+            5.0 Google-arvosana – Tampereen luotetuin
+        </div>
+        <h1 class="hero-title animate-in d1">
+            Putkimies joka tulee<br>
+            <span class="hero-highlight">tänään</span> – ei ensi viikolla
+        </h1>
+        <p class="hero-subtitle animate-in d2">
+            Ammattitaitoinen LVI-asentaja ovellasi jopa samana päivänä.<br class="hide-mobile">
+            Kaikki putkityöt, lämpöpumput ja LVI-remontit kiinteällä hinnalla.
+        </p>
+        <div class="hero-ctas animate-in d3">
+            <a href="tel:+358505864771" class="btn-hero-primary">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                Soita: 050 586 4771
+                <span class="btn-shimmer"></span>
+            </a>
+            <a href="#hinnasto" class="btn-hero-outline">
+                Katso hinnasto
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+            </a>
+        </div>
+        <div class="hero-trust animate-in d4">
+            <div class="trust-pill">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                24/7 Päivystys
+            </div>
+            <div class="trust-pill">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Ilmainen neuvonta
+            </div>
+            <div class="trust-pill">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Kiinteä hinta
+            </div>
+        </div>
+    </div>
+    <div class="hero-scroll-indicator">
+        <span>Selaa alas</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+</section>
+
+<!-- Stats Bar -->
+<section class="stats-bar">
+    <div class="container stats-grid">
+        <div class="stat-item" data-animate>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="stat-number">24/7</div>
+            <div class="stat-text">Päivystys</div>
+        </div>
+        <div class="stat-item" data-animate>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <div class="stat-number">5.0</div>
+            <div class="stat-text">Google ★</div>
+        </div>
+        <div class="stat-item" data-animate>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="stat-number">100%</div>
+            <div class="stat-text">Tyytyväisiä</div>
+        </div>
+        <div class="stat-item" data-animate>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="stat-number">Pirkanmaa</div>
+            <div class="stat-text">Palvelualue</div>
+        </div>
+    </div>
+</section>
+
+<!-- Problem Section -->
+<section class="problem-section">
+    <div class="problem-bg"></div>
+    <div class="container">
+        <div class="section-header light" data-animate>
+            <span class="section-tag">Tunnistatkö nämä?</span>
+            <h2>Yleisimmät LVI-ongelmat</h2>
+        </div>
+        <div class="problem-grid">
+            <div class="problem-card glass" data-animate>
+                <div class="problem-emoji">😤</div>
+                <h3>Putkimies ei vastaa?</h3>
+                <p>Me vastaamme aina – myös iltaisin ja viikonloppuisin.</p>
+                <div class="problem-solution">Ratkaisu: Soita, vastaamme heti</div>
+            </div>
+            <div class="problem-card glass" data-animate>
+                <div class="problem-emoji">😰</div>
+                <h3>Pelkäätkö yllätyslaskua?</h3>
+                <p>Selkeä kiinteä tuntihinta. Tiedät aina etukäteen mitä maksat.</p>
+                <div class="problem-solution">Ratkaisu: Kiinteä 65 €/h</div>
+            </div>
+            <div class="problem-card glass" data-animate>
+                <div class="problem-emoji">⏳</div>
+                <h3>Viikkojen odotus?</h3>
+                <p>Reagoimme nopeasti – usein paikalla jo samana päivänä.</p>
+                <div class="problem-solution">Ratkaisu: Paikalla tänään</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services with Photo Backgrounds -->
+<section class="services-section" id="palvelut">
+    <div class="container">
+        <div class="section-header" data-animate>
+            <span class="section-tag">Palvelumme</span>
+            <h2>Kaikki LVI-työt <span class="text-gradient">yhdestä paikasta</span></h2>
+            <p class="section-desc">Hanan vaihdosta koko talon energiaremonttiin – ammattitaidolla ja takuulla.</p>
+        </div>
+        <div class="services-showcase">
+            <div class="service-big" data-animate>
+                <div class="service-big-bg" style="background-image: url('https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=800&q=80')"></div>
+                <div class="service-big-overlay"></div>
+                <div class="service-big-content">
+                    <span class="service-tag-label">Suosituin palvelu</span>
+                    <h3>Lämpöpumput</h3>
+                    <p>Maalämpö, ilmalämpö ja ilma-vesilämpöpumppujen myynti, asennus ja huolto. Säästä energiakuluissa jopa 70%.</p>
+                    <ul>
+                        <li>Maalämpöpumput</li>
+                        <li>Ilmalämpöpumput</li>
+                        <li>Ilma-vesilämpöpumput</li>
+                        <li>Asiantunteva huolto</li>
+                    </ul>
+                    <a href="tel:+358505864771" class="btn-service">Kysy tarjous →</a>
+                </div>
+            </div>
+            <div class="services-side">
+                <div class="service-card-img" data-animate>
+                    <div class="service-card-bg" style="background-image: url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80')"></div>
+                    <div class="service-card-overlay"></div>
+                    <div class="service-card-text">
+                        <h3>Putkityöt</h3>
+                        <p>Hanojen vaihto, vuotokorjaukset, viemärityöt, pesukoneasennukset</p>
+                        <span class="service-arrow">→</span>
+                    </div>
+                </div>
+                <div class="service-card-img" data-animate>
+                    <div class="service-card-bg" style="background-image: url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&q=80')"></div>
+                    <div class="service-card-overlay"></div>
+                    <div class="service-card-text">
+                        <h3>LVI-remontit</h3>
+                        <p>Kylpyhuoneremontit, patterit, lattialämmitykset</p>
+                        <span class="service-arrow">→</span>
+                    </div>
+                </div>
+                <div class="service-card-img" data-animate>
+                    <div class="service-card-bg" style="background-image: url('https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&q=80')"></div>
+                    <div class="service-card-overlay"></div>
+                    <div class="service-card-text">
+                        <h3>Huolto 24/7</h3>
+                        <p>Lämpöpumppuhuollot, vuosihuollot, hätäkorjaukset</p>
+                        <span class="service-arrow">→</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Us -->
+<section class="why-section" id="miksi-me">
+    <div class="container">
+        <div class="section-header" data-animate>
+            <span class="section-tag">Miksi LVI Kruunu</span>
+            <h2>Palvelua jota <span class="text-gradient">et unohda</span></h2>
+        </div>
+        <div class="why-layout">
+            <div class="why-cards">
+                <div class="why-card" data-animate>
+                    <div class="why-icon">⚡</div>
+                    <div><h3>Samana päivänä paikalla</h3><p>Kun putki vuotaa, et voi odottaa. Reagoimme nopeasti.</p></div>
+                </div>
+                <div class="why-card" data-animate>
+                    <div class="why-icon">💰</div>
+                    <div><h3>Ei piilokustannuksia</h3><p>Selkeä tuntihinta. Kerromme etukäteen mitä työ maksaa.</p></div>
+                </div>
+                <div class="why-card" data-animate>
+                    <div class="why-icon">🏆</div>
+                    <div><h3>100% tyytyväisyys</h3><p>Jokainen asiakas on antanut täydet 5 tähteä.</p></div>
+                </div>
+                <div class="why-card" data-animate>
+                    <div class="why-icon">🤝</div>
+                    <div><h3>Henkilökohtainen palvelu</h3><p>Joonas hoitaa työn alusta loppuun. Ei välikäsiä.</p></div>
+                </div>
+            </div>
+            <div class="why-profile" data-animate>
+                <div class="profile-card">
+                    <div class="profile-glow"></div>
+                    <div class="profile-avatar">JL</div>
+                    <div class="profile-status"><span class="pulse-dot-green"></span>Vapaa tänään</div>
+                    <h3>Joonas Lehtinen</h3>
+                    <p class="profile-role">LVI-asentaja & Yrittäjä</p>
+                    <div class="profile-stats">
+                        <div><strong>5.0</strong><span>Google ★</span></div>
+                        <div><strong>24/7</strong><span>Päivystys</span></div>
+                    </div>
+                    <blockquote>"Asiakaspalveluasenne on kruununjalokiviainesta"</blockquote>
+                    <a href="tel:+358505864771" class="btn-profile">Soita Joonakselle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing -->
+<section class="pricing-section" id="hinnasto">
+    <div class="container">
+        <div class="section-header" data-animate>
+            <span class="section-tag">Selkeä hinnoittelu</span>
+            <h2>Tiedät aina mitä <span class="text-gradient">maksat</span></h2>
+            <p class="section-desc">Ei piilokustannuksia. Kaikki hinnat sisältävät ALV:n.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="price-card" data-animate>
+                <div class="price-header"><h3>Pikatyö</h3><p>Alle tunnin työt</p></div>
+                <div class="price-amount"><span class="currency">€</span>100<span class="per">/h</span></div>
+                <ul class="price-list"><li>Hanan vaihto</li><li>Pieni vuotokorjaus</li><li>WC-istuimen vaihto</li><li>Nopea diagnosointi</li></ul>
+                <a href="tel:+358505864771" class="btn-price">Soita ja varaa</a>
+            </div>
+            <div class="price-card featured" data-animate>
+                <div class="price-badge">Paras arvo</div>
+                <div class="price-header"><h3>Tuntityö</h3><p>2+ tuntia</p></div>
+                <div class="price-amount"><span class="currency">€</span>65<span class="per">/h</span></div>
+                <div class="price-save">Säästä 35%!</div>
+                <ul class="price-list"><li>Kaikki putkityöt</li><li>Lämpöpumppuasennukset</li><li>Kylpyhuoneremontit</li><li>LVI-kokonaisprojektit</li><li>Kotitalousvähennys</li></ul>
+                <a href="tel:+358505864771" class="btn-price-primary">Soita ja varaa</a>
+            </div>
+            <div class="price-card" data-animate>
+                <div class="price-header"><h3>Matkakulut</h3><p>Kilometrikorvaus</p></div>
+                <div class="price-amount"><span class="currency">€</span>1,35<span class="per">/km</span></div>
+                <ul class="price-list"><li>Tampere & lähikunnat</li><li>Ei piilomaksuja</li><li>Kaikki sis. ALV</li><li>Selkeä laskutus</li></ul>
+                <a href="tel:+358505864771" class="btn-price">Kysy tarjous</a>
+            </div>
+        </div>
+        <div class="tax-tip" data-animate>
+            <div class="tax-icon">💡</div>
+            <div><strong>Muista kotitalousvähennys!</strong><p>Voit vähentää LVI-työn verotuksessa. Soita ja kysy lisää!</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- Reviews -->
+<section class="reviews-section" id="arvostelut">
+    <div class="reviews-bg"></div>
+    <div class="container">
+        <div class="section-header light" data-animate>
+            <span class="section-tag light-tag">Asiakkaat</span>
+            <h2>Älä usko meitä –<br>usko <span class="text-gradient-gold">asiakkaitamme</span></h2>
+            <div class="reviews-stars"><span class="big-stars">★★★★★</span><span>5.0 / 5 Google</span></div>
+        </div>
+        <div class="reviews-grid">
+            <div class="review-card glass-dark" data-animate>
+                <div class="review-stars-row">★★★★★</div>
+                <p>"LVI Kruunun Joonas Lehtisen asiakaspalveluasenne on sellaista <strong>kruununjalokiviainesta</strong> – sydämellisen pyyteetöntä ja supernopeaa."</p>
+                <div class="review-footer"><div class="review-avatar-circle">T</div><div><strong>Tyytyväinen asiakas</strong><span>Google</span></div></div>
+            </div>
+            <div class="review-card glass-dark" data-animate>
+                <div class="review-stars-row">★★★★★</div>
+                <p>"Nyt on putkimies, jonka <strong>sanaan voi luottaa</strong> ja hänen kanssaan on helppo toimia! Auttoi perhettämme hädän keskellä."</p>
+                <div class="review-footer"><div class="review-avatar-circle">K</div><div><strong>Kiitollinen perhe</strong><span>Google</span></div></div>
+            </div>
+            <div class="review-card glass-dark" data-animate>
+                <div class="review-stars-row">★★★★★</div>
+                <p>"Very good and neat washing machine installation. Fast, helpful and smiling employee. <strong>10/10 would recommend.</strong>"</p>
+                <div class="review-footer"><div class="review-avatar-circle">M</div><div><strong>Happy customer</strong><span>Google</span></div></div>
+            </div>
+            <div class="review-card glass-dark" data-animate>
+                <div class="review-stars-row">★★★★★</div>
+                <p>"Erinomaisen hyvää, <strong>laadukasta ja täsmällistä palvelua</strong>. Ammattimaista kaikin puolin. Suosittelen!"</p>
+                <div class="review-footer"><div class="review-avatar-circle">S</div><div><strong>Suositteleva asiakas</strong><span>Google</span></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="ukk">
+    <div class="container">
+        <div class="section-header" data-animate>
+            <span class="section-tag">UKK</span>
+            <h2>Kysymyksiä? <span class="text-gradient">Vastauksia.</span></h2>
+        </div>
+        <div class="faq-list" data-animate>
+            <details class="faq-item"><summary>Kuinka nopeasti pääsette paikalle?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary><div class="faq-answer"><p>Useimmiten saman päivän aikana. Kiireellisissä tapauksissa mahdollisimman nopeasti – päivystämme 24/7.</p></div></details>
+            <details class="faq-item"><summary>Mitä alueita palvelette?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary><div class="faq-answer"><p>Koko Pirkanmaa: Tampere, Kangasala, Nokia, Ylöjärvi, Lempäälä, Pirkkala, Orivesi ja lähikunnat.</p></div></details>
+            <details class="faq-item"><summary>Saanko kotitalousvähennyksen?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary><div class="faq-answer"><p>Kyllä! LVI-asennustyöt ovat kotitalousvähennyskelpoisia – merkittävä säästö verotuksessa.</p></div></details>
+            <details class="faq-item"><summary>Paljonko lämpöpumpun asennus maksaa?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary><div class="faq-answer"><p>Riippuu pumpputyypistä ja kohteesta. Soita niin annamme tarkan tarjouksen – neuvonta on ilmaista!</p></div></details>
+            <details class="faq-item"><summary>Teettekö myös pieniä töitä?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary><div class="faq-answer"><p>Ehdottomasti! Hanan vaihdosta energiaremonttiin – mikään työ ei ole liian pieni tai suuri.</p></div></details>
+            <details class="faq-item"><summary>Onko neuvonta maksullista?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary><div class="faq-answer"><p>Ei! Neuvonta on aina ilmaista. Soittaminen ei sido mihinkään.</p></div></details>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final-cta">
+    <div class="final-cta-bg"></div>
+    <div class="container final-cta-content" data-animate>
+        <h2>Tarvitsetko putkimiestä?</h2>
+        <p>Soita nyt – ilmainen neuvonta, paikalla usein jo tänään.</p>
+        <div class="final-cta-buttons">
+            <a href="tel:+358505864771" class="btn-hero-primary large">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                050 586 4771
+                <span class="btn-shimmer"></span>
+            </a>
+            <a href="mailto:joonas@lvikruunu.fi" class="btn-hero-outline">joonas@lvikruunu.fi</a>
+        </div>
+        <p class="final-note">Päivystys 24/7 · Ilmainen neuvonta · Ei velvoitteita</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="footer-brand">
+            <div class="logo"><span class="logo-crown">👑</span><div class="logo-text">LVI<span>Kruunu</span></div></div>
+            <p>Ammattilaisen LVI-palvelut Tampereella ja koko Pirkanmaalla.</p>
+        </div>
+        <div class="footer-links"><h4>Palvelut</h4><a href="#palvelut">Putkityöt</a><a href="#palvelut">Lämpöpumput</a><a href="#palvelut">LVI-remontit</a><a href="#palvelut">Huolto</a></div>
+        <div class="footer-links"><h4>Yhteystiedot</h4><a href="tel:+358505864771">050 586 4771</a><a href="mailto:joonas@lvikruunu.fi">joonas@lvikruunu.fi</a><span>Tampere & Pirkanmaa</span><span>Y-tunnus: 3393873-2</span></div>
+    </div>
+    <div class="container footer-bottom"><p>&copy; 2025 LVI Kruunu.</p></div>
+</footer>
+
+<!-- Floating Mobile CTA -->
+<div class="floating-cta">
+    <a href="tel:+358505864771" class="floating-btn">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Soita nyt – 050 586 4771
+    </a>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

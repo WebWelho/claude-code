@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sivustoportfolio – Esikatselut</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--gold:#C9A84C;--dark:#0F0F0F;--dark-2:#1A1A1A;--dark-3:#242424;--gray:#6B6B6B;--gray-light:#A0A0A0}
+    body{font-family:'Inter',sans-serif;background:var(--dark);color:#fff;min-height:100vh}
+    header{padding:3rem 2rem;border-bottom:1px solid rgba(255,255,255,0.07);background:var(--dark-2)}
+    .header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .logo-top{font-size:0.65rem;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;font-weight:600}
+    .logo-bottom{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:800}
+    .header-desc{color:var(--gray-light);font-size:0.9rem}
+    main{max-width:1100px;margin:0 auto;padding:3rem 2rem}
+    h2{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:0.5rem}
+    .subtitle{color:var(--gray-light);font-size:0.9rem;margin-bottom:2.5rem}
+    .sites-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+    .site-card{background:var(--dark-2);border:1px solid rgba(255,255,255,0.07);border-radius:4px;overflow:hidden;transition:border-color 0.3s,transform 0.3s}
+    .site-card:hover{border-color:rgba(201,168,76,0.4);transform:translateY(-4px)}
+    .site-preview{height:180px;background:var(--dark-3);display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden}
+    .site-preview iframe{position:absolute;inset:0;width:200%;height:200%;transform:scale(0.5);transform-origin:top left;border:none;pointer-events:none}
+    .site-info{padding:1.25rem}
+    .site-name{font-weight:700;font-size:1rem;margin-bottom:0.25rem}
+    .site-path{color:var(--gray);font-size:0.78rem;font-family:monospace;margin-bottom:1rem}
+    .site-actions{display:flex;gap:0.75rem}
+    .btn-open{flex:1;background:var(--gold);color:#0F0F0F;border:none;padding:0.65rem 1rem;font-weight:700;font-size:0.85rem;border-radius:3px;text-decoration:none;text-align:center;transition:background 0.2s;cursor:pointer}
+    .btn-open:hover{background:#E8C96B}
+    .btn-copy{background:var(--dark-3);color:var(--gray-light);border:1px solid rgba(255,255,255,0.1);padding:0.65rem 1rem;font-size:0.85rem;border-radius:3px;cursor:pointer;transition:border-color 0.2s,color 0.2s;font-family:'Inter',sans-serif}
+    .btn-copy:hover{border-color:var(--gold);color:var(--gold)}
+    .btn-copy.copied{color:#4ade80;border-color:#4ade80}
+    footer{text-align:center;padding:2rem;color:var(--gray);font-size:0.82rem;border-top:1px solid rgba(255,255,255,0.06);margin-top:4rem}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div>
+        <div class="logo-top">Portfolio</div>
+        <div class="logo-bottom">Asiakassivustot</div>
+      </div>
+      <div class="header-desc">Kaikki asiakkaille tehdyt sivustot yhdessä paikassa</div>
+    </div>
+  </header>
+  <main>
+    <h2>Sivustoesikatselut</h2>
+    <p class="subtitle">Klikkaa "Avaa esikatselu" ja lähetä linkki suoraan asiakkaalle.</p>
+    <div class="sites-grid" id="sitesGrid"></div>
+  </main>
+  <footer>Päivitetty automaattisesti GitHub Actionsin kautta</footer>
+  <script>
+    const BASE = window.location.origin + window.location.pathname.replace('index.html','').replace(/\/$/,'');
+    // These are populated manually for docs/ fallback. The workflow generates its own.
+    const SITES = ["lvikruunu-website","savomega-website"];
+    const grid = document.getElementById('sitesGrid');
+    SITES.forEach(site => {
+      const url = BASE + '/' + site + '/index.html';
+      const label = site.replace(/-website$/,'').replace(/-/g,' ').replace(/\b\w/g, c => c.toUpperCase());
+      grid.innerHTML += `
+        <div class="site-card">
+          <div class="site-preview">🌐</div>
+          <div class="site-info">
+            <div class="site-name">${label}</div>
+            <div class="site-path">${site}/index.html</div>
+            <div class="site-actions">
+              <a class="btn-open" href="${url}" target="_blank">Avaa esikatselu →</a>
+              <button class="btn-copy" onclick="copyLink('${url}',this)">Kopioi linkki</button>
+            </div>
+          </div>
+        </div>`;
+    });
+    function copyLink(url,btn){
+      navigator.clipboard.writeText(url).then(()=>{
+        btn.textContent='✓ Kopioitu!';btn.classList.add('copied');
+        setTimeout(()=>{btn.textContent='Kopioi linkki';btn.classList.remove('copied')},2000);
+      });
+    }
+  </script>
+</body>
+</html>
