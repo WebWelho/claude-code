@@ -1,0 +1,166 @@
+name: Deploy UrakoitsijaHub – Separate GitHub Pages Site
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - 'claude/**'
+    paths:
+      - 'passive-income-platform/**'
+      - '.github/workflows/deploy-platform.yml'
+  workflow_dispatch:
+
+# NOTE: This workflow requires a Personal Access Token (PAT) stored as GH_PAT secret.
+# The PAT needs "repo" scope to create the target repository and push to it.
+# Add it at: Settings → Secrets and variables → Actions → New repository secret → GH_PAT
+#
+# If GH_PAT is not set, the workflow will skip deployment and print instructions.
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check if GH_PAT is available
+        id: check_pat
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          if [ -z "$GH_PAT" ]; then
+            echo "has_pat=false" >> $GITHUB_OUTPUT
+            echo "::warning::GH_PAT secret is not set. Skipping deployment."
+            echo ""
+            echo "============================================"
+            echo " ACTION REQUIRED: Add GH_PAT Secret"
+            echo "============================================"
+            echo ""
+            echo "To deploy UrakoitsijaHub to a separate GitHub Pages site:"
+            echo ""
+            echo "1. Create a GitHub Personal Access Token:"
+            echo "   https://github.com/settings/tokens/new"
+            echo "   → Select scopes: repo (full control)"
+            echo ""
+            echo "2. Add it as a repository secret:"
+            echo "   https://github.com/WebWelho/claude-code/settings/secrets/actions"
+            echo "   → Name: GH_PAT"
+            echo "   → Value: (paste your token)"
+            echo ""
+            echo "3. Re-run this workflow manually:"
+            echo "   Actions → Deploy UrakoitsijaHub → Run workflow"
+            echo ""
+            echo "Result: https://WebWelho.github.io/urakointijahub/"
+            echo "============================================"
+          else
+            echo "has_pat=true" >> $GITHUB_OUTPUT
+            echo "GH_PAT found, proceeding with deployment..."
+          fi
+
+      - name: Configure Git
+        if: steps.check_pat.outputs.has_pat == 'true'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create target repo if it doesn't exist
+        if: steps.check_pat.outputs.has_pat == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          OWNER="WebWelho"
+          REPO="urakointijahub"
+
+          # Try to create repo (fails silently if already exists)
+          gh repo create "$OWNER/$REPO" \
+            --public \
+            --description "UrakoitsijaHub – Automaattinen liidialusta LVI & sähköalan yrittäjille" \
+            --homepage "https://$OWNER.github.io/$REPO" \
+            2>/dev/null && echo "Repo created!" || echo "Repo already exists, continuing..."
+
+      - name: Deploy platform files to target repo
+        if: steps.check_pat.outputs.has_pat == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          OWNER="WebWelho"
+          REPO="urakointijahub"
+          SOURCE_DIR="passive-income-platform"
+
+          echo "=== Cloning target repo ==="
+          git clone "https://x-access-token:${GH_TOKEN}@github.com/$OWNER/$REPO.git" /tmp/target-repo
+
+          cd /tmp/target-repo
+
+          echo "=== Switching to gh-pages branch ==="
+          git checkout gh-pages 2>/dev/null || git checkout --orphan gh-pages
+
+          echo "=== Clearing old content ==="
+          git rm -rf . 2>/dev/null || true
+          find . -not -path './.git/*' -not -name '.git' -delete 2>/dev/null || true
+
+          echo "=== Copying platform files ==="
+          cp -r "$GITHUB_WORKSPACE/$SOURCE_DIR/." .
+
+          echo "=== Removing vercel.json (not needed for GitHub Pages) ==="
+          rm -f vercel.json
+
+          echo "=== Verifying structure ==="
+          ls -la
+
+          echo "=== Committing ==="
+          git add -A
+          git diff --staged --stat
+          git commit -m "Deploy UrakoitsijaHub $(date '+%Y-%m-%d %H:%M')" || echo "Nothing new to commit"
+
+          echo "=== Pushing to gh-pages ==="
+          git push origin gh-pages --force
+
+      - name: Enable GitHub Pages on target repo
+        if: steps.check_pat.outputs.has_pat == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          OWNER="WebWelho"
+          REPO="urakointijahub"
+
+          # Try to create pages config (POST = first time)
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/$OWNER/$REPO/pages" \
+            --input - <<EOF 2>/dev/null || true
+          {
+            "source": {
+              "branch": "gh-pages",
+              "path": "/"
+            }
+          }
+          EOF
+
+          # If already exists, update it (PUT)
+          gh api \
+            --method PUT \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/$OWNER/$REPO/pages" \
+            --input - <<EOF 2>/dev/null || true
+          {
+            "source": {
+              "branch": "gh-pages",
+              "path": "/"
+            }
+          }
+          EOF
+
+          echo ""
+          echo "============================================"
+          echo " DEPLOYED SUCCESSFULLY!"
+          echo "============================================"
+          echo " URL: https://WebWelho.github.io/urakointijahub/"
+          echo ""
+          echo " Note: GitHub Pages may take 2-5 minutes to activate."
+          echo "============================================"
