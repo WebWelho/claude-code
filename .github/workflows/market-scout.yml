@@ -1,0 +1,224 @@
+name: Market Scout — Automated Business Intelligence
+
+on:
+  schedule:
+    # Runs 4x daily: 06:00, 12:00, 18:00, 00:00 Finnish time (UTC+2/+3)
+    # UTC times: 04:00, 10:00, 16:00, 22:00
+    - cron: '0 4 * * *'
+    - cron: '0 10 * * *'
+    - cron: '0 16 * * *'
+    - cron: '0 22 * * *'
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: 'Specific topic to scan (leave empty for all)'
+        required: false
+        default: ''
+      debug:
+        description: 'Enable debug output'
+        required: false
+        default: 'false'
+        type: boolean
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  market-scout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Read topics configuration
+        id: config
+        run: |
+          CONFIG=$(cat plugins/market-scout/config/topics.json)
+          echo "config=$CONFIG" >> $GITHUB_OUTPUT
+
+          # Extract topic IDs for parallel processing
+          TOPIC_IDS=$(echo "$CONFIG" | node -e "
+            const data = JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8'));
+            const topic = '${{ inputs.topic }}';
+            const topics = topic
+              ? data.topics.filter(t => t.id === topic && t.active)
+              : data.topics.filter(t => t.active);
+            console.log(topics.map(t => t.id).join(' '));
+          ")
+          echo "topic_ids=$TOPIC_IDS" >> $GITHUB_OUTPUT
+          echo "Topics to scan: $TOPIC_IDS"
+
+      - name: Run Topic Researchers (parallel)
+        id: research
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          mkdir -p /tmp/market-scout-data
+
+          # Run topic research for each topic
+          for TOPIC_ID in ${{ steps.config.outputs.topic_ids }}; do
+            echo "Researching topic: $TOPIC_ID"
+
+            TOPIC_DATA=$(cat plugins/market-scout/config/topics.json | node -e "
+              const data = JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8'));
+              const topic = data.topics.find(t => t.id === '$TOPIC_ID');
+              console.log(JSON.stringify(topic));
+            ")
+
+            claude --print \
+              --system-prompt "$(cat plugins/market-scout/agents/topic-researcher.md)" \
+              "Research this topic and return structured JSON findings. Topic data: $TOPIC_DATA. Search for the latest news, product launches, and developments in this area from the last 48 hours. Return valid JSON only." \
+              > /tmp/market-scout-data/research-$TOPIC_ID.json 2>&1 || echo '{"topic":"'$TOPIC_ID'","findings":[],"error":"Research failed"}' > /tmp/market-scout-data/research-$TOPIC_ID.json
+
+            echo "Research for $TOPIC_ID completed"
+          done
+
+      - name: Run Finland Opportunity Scanner
+        id: finland_scan
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          # Combine all research data for context
+          ALL_RESEARCH=$(cat /tmp/market-scout-data/research-*.json 2>/dev/null | tr '\n' ' ' || echo '[]')
+          TOPICS_CONFIG=$(cat plugins/market-scout/config/topics.json)
+
+          claude --print \
+            --system-prompt "$(cat plugins/market-scout/agents/finland-opportunity-scanner.md)" \
+            "Analyze these topic areas for Finland market opportunities. Topics config: $TOPICS_CONFIG. Recent research context: $ALL_RESEARCH. Find international products/tools not yet in Finland and return structured JSON." \
+            > /tmp/market-scout-data/finland-opportunities.json 2>&1 || echo '{"opportunities":[],"error":"Scan failed"}' > /tmp/market-scout-data/finland-opportunities.json
+
+          echo "Finland opportunity scan completed"
+
+      - name: Run Trend Analyzer
+        id: trends
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          ALL_DATA=$(cat /tmp/market-scout-data/*.json 2>/dev/null | tr '\n' ' ' || echo '{}')
+
+          claude --print \
+            --system-prompt "$(cat plugins/market-scout/agents/trend-analyzer.md)" \
+            "Analyze these research findings for trends and patterns. Data: $ALL_DATA. Return structured JSON trend analysis." \
+            > /tmp/market-scout-data/trends.json 2>&1 || echo '{"hot_trends":[],"error":"Analysis failed"}' > /tmp/market-scout-data/trends.json
+
+          echo "Trend analysis completed"
+
+      - name: Compile Report
+        id: report
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          ALL_DATA=$(cat /tmp/market-scout-data/*.json 2>/dev/null | tr '\n' ' ' || echo '{}')
+          CURRENT_DATE=$(TZ='Europe/Helsinki' date '+%Y-%m-%d %H:%M')
+          REPORT_FILE="reports/$(TZ='Europe/Helsinki' date '+%Y-%m-%d-%H%M').md"
+
+          REPORT=$(claude --print \
+            --system-prompt "$(cat plugins/market-scout/agents/report-compiler.md)" \
+            "Compile a market intelligence report from this data. Current Finnish time: $CURRENT_DATE. Data: $ALL_DATA. Return a complete markdown report." \
+            2>&1)
+
+          mkdir -p reports
+          echo "$REPORT" > "$REPORT_FILE"
+          echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
+          echo "Report saved to: $REPORT_FILE"
+
+      - name: Update Reports Index
+        run: |
+          mkdir -p reports
+
+          # Generate index of all reports
+          cat > reports/INDEX.md << 'EOF'
+          # Market Scout Reports Index
+
+          *Auto-updated by market-scout workflow*
+
+          ## Recent Reports
+
+          EOF
+
+          # List all reports newest first
+          ls -t reports/*.md 2>/dev/null | grep -v INDEX.md | head -20 | while read f; do
+            DATE=$(echo "$f" | grep -oP '\d{4}-\d{2}-\d{2}-\d{4}' || basename "$f" .md)
+            echo "- [$DATE]($f)" >> reports/INDEX.md
+          done
+
+      - name: Commit Reports
+        run: |
+          git config --global user.email "market-scout@github-actions"
+          git config --global user.name "Market Scout Bot"
+          git add reports/
+
+          REPORT_COUNT=$(ls reports/*.md 2>/dev/null | grep -v INDEX | wc -l)
+          git commit -m "market-scout: add report $(TZ='Europe/Helsinki' date '+%Y-%m-%d %H:%M') Finnish time" \
+            --allow-empty || echo "No changes to commit"
+
+          git push origin HEAD
+
+      - name: Send Email Digest
+        if: ${{ !cancelled() }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          secure: false
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "Market Scout Report — ${{ steps.report.outputs.report_file }}"
+          to: ${{ secrets.MAIL_RECIPIENT }}
+          from: Market Scout <${{ secrets.MAIL_USERNAME }}>
+          body: |
+            Your automated market intelligence scan is complete.
+
+            Report: ${{ steps.report.outputs.report_file }}
+
+            View full report in your repository:
+            https://github.com/${{ github.repository }}/blob/main/${{ steps.report.outputs.report_file }}
+
+            ---
+            Market Scout | Automated Business Intelligence
+          ignore_cert: true
+        continue-on-error: true
+
+      - name: Create GitHub Issue for High-Priority Opportunities
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if there are high-priority opportunities (score >= 8)
+          HIGH_PRIORITY=$(cat /tmp/market-scout-data/finland-opportunities.json 2>/dev/null | \
+            node -e "
+              try {
+                const data = JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8'));
+                const high = (data.opportunities || []).filter(o => o.opportunity_score >= 8);
+                if (high.length > 0) {
+                  console.log(high.map(o => '- **' + o.product_name + '** (' + o.opportunity_score + '/10): ' + o.description).join('\n'));
+                }
+              } catch(e) { /* no output */ }
+            " 2>/dev/null || echo "")
+
+          if [ -n "$HIGH_PRIORITY" ]; then
+            gh issue create \
+              --title "🔥 High-Priority Finland Opportunities — $(date '+%Y-%m-%d')" \
+              --body "## New High-Priority Finland Market Opportunities
+
+          $HIGH_PRIORITY
+
+          **Full report:** https://github.com/${{ github.repository }}/blob/main/${{ steps.report.outputs.report_file }}
+
+          *Generated by market-scout workflow*" \
+              --label "market-intel" \
+              || echo "Could not create issue (label may not exist yet)"
+          fi
