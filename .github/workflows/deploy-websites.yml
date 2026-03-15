@@ -9,6 +9,7 @@ on:
     paths:
       - '*-website/**'
       - 'docs/**'
+      - 'passive-income-platform/**'
       - '.github/workflows/deploy-websites.yml'
 
   # Mahdollistaa manuaalisen ajon
@@ -50,6 +51,12 @@ jobs:
             echo "Copying $dir..."
             cp -r "$dir" "_site/$dir"
           done
+
+          # Copy passive-income-platform separately (not a client site)
+          if [ -d "passive-income-platform" ]; then
+            echo "Copying passive-income-platform..."
+            cp -r "passive-income-platform" "_site/passive-income-platform"
+          fi
 
           # Use docs/index.html as portal if it exists
           if [ -f docs/index.html ]; then
