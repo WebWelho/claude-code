@@ -12,26 +12,33 @@
     <title>SavoMega Service Ky | Sähkötyöt Siilinjärvi & Kuopio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Cursor glow effect -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="container nav-container">
             <a href="#hero" class="logo">
-                <span class="logo-icon">&#9889;</span>
-                <span class="logo-text">Savo<span class="logo-highlight">Mega</span></span>
+                <div class="logo-mark">
+                    <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+                        <rect width="40" height="40" rx="10" fill="url(#logoGrad)"/>
+                        <path d="M22 8L12 22h7l-1.5 10L28 18h-7L22 8z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/>
+                        <defs><linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#2563eb"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs>
+                    </svg>
+                </div>
+                <span class="logo-text">SavoMega</span>
             </a>
             <button class="nav-toggle" id="navToggle" aria-label="Avaa valikko">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#palvelut">Palvelut</a></li>
                 <li><a href="#miksi-me">Miksi me</a></li>
-                <li><a href="#toimialue">Toimialue</a></li>
+                <li><a href="#prosessi">Näin toimimme</a></li>
                 <li><a href="#referenssit">Referenssit</a></li>
                 <li><a href="#yhteystiedot">Yhteystiedot</a></li>
                 <li><a href="#tarjous" class="nav-cta">Pyydä tarjous</a></li>
@@ -39,279 +46,349 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- ===== HERO ===== -->
     <section class="hero" id="hero">
         <div class="hero-bg">
-            <div class="hero-particles" id="particles"></div>
-            <div class="hero-gradient"></div>
+            <div class="hero-image-layer">
+                <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1920&q=80" alt="" class="hero-bg-img" loading="eager">
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="hero-grid-lines"></div>
+            <canvas id="electricCanvas" class="hero-canvas"></canvas>
         </div>
+
         <div class="container hero-content">
-            <div class="hero-badge">
-                <span class="badge-dot"></span>
-                Ammattitaitoinen sähköurakoitsija
-            </div>
-            <h1 class="hero-title">
-                Luotettavat <span class="text-gradient">sähkötyöt</span><br>
-                Siilinjärven seudulla
-            </h1>
-            <p class="hero-subtitle">
-                SavoMega Service Ky tarjoaa monipuoliset sähköasennuspalvelut koteihin ja yrityksille.
-                Henkilökohtaista palvelua, joustavasti ja ammattitaidolla.
-            </p>
-            <div class="hero-actions">
-                <a href="#tarjous" class="btn btn-primary btn-lg">
-                    <span>Pyydä maksuton tarjous</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-                <a href="tel:+358XXXXXXXXX" class="btn btn-outline btn-lg">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    <span>Soita meille</span>
-                </a>
-            </div>
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="stat-number" data-target="100">0</span><span class="stat-suffix">%</span>
-                    <span class="stat-label">Asiakastyytyväisyys</span>
+            <div class="hero-left">
+                <div class="hero-badge">
+                    <span class="badge-pulse"></span>
+                    Vastaanottaa projekteja
                 </div>
-                <div class="stat-divider"></div>
-                <div class="stat">
-                    <span class="stat-number" data-target="24">0</span><span class="stat-suffix">h</span>
-                    <span class="stat-label">Nopea reagointi</span>
+                <h1 class="hero-title">
+                    Sähkötyöt jotka<br>
+                    <span class="hero-title-accent">ylittävät odotukset</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Ammattitaitoinen sähköurakoitsija Siilinjärven seudulla. Kodin sähkösaneerauksista aurinkopaneeleihin
+                    &mdash; henkilökohtaista palvelua ilman välikäsiä.
+                </p>
+                <div class="hero-actions">
+                    <a href="#tarjous" class="btn btn-primary btn-lg">
+                        <span>Pyydä maksuton tarjous</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="tel:+358XXXXXXXXX" class="btn btn-glass btn-lg">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <span>Soita meille</span>
+                    </a>
                 </div>
-                <div class="stat-divider"></div>
-                <div class="stat">
-                    <span class="stat-number" data-target="100">0</span><span class="stat-suffix">+</span>
-                    <span class="stat-label">Tyytyväistä asiakasta</span>
+                <!-- Trust bar -->
+                <div class="hero-trust">
+                    <div class="trust-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <span>Vakuutettu</span>
+                    </div>
+                    <div class="trust-divider"></div>
+                    <div class="trust-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <span>Pätevöitynyt</span>
+                    </div>
+                    <div class="trust-divider"></div>
+                    <div class="trust-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <span>5/5 arvosana</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <div class="hero-showcase">
+                    <div class="showcase-card showcase-main">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=600&q=80" alt="Sähköasennus" loading="eager">
+                        <div class="showcase-overlay">
+                            <span class="showcase-tag">Sähkösaneeraus</span>
+                        </div>
+                    </div>
+                    <div class="showcase-card showcase-float-1">
+                        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=400&q=80" alt="Aurinkopaneelit" loading="eager">
+                        <div class="showcase-overlay">
+                            <span class="showcase-tag">Aurinkosähkö</span>
+                        </div>
+                    </div>
+                    <div class="showcase-card showcase-float-2">
+                        <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=400&q=80" alt="Ilmalämpöpumppu" loading="eager">
+                        <div class="showcase-overlay">
+                            <span class="showcase-tag">Lämpöpumput</span>
+                        </div>
+                    </div>
+                    <!-- Floating stats card -->
+                    <div class="showcase-stat-card">
+                        <div class="stat-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                        </div>
+                        <div>
+                            <strong>100+ projektia</strong>
+                            <span>tyytyväistä asiakasta</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="hero-scroll">
-            <a href="#palvelut" aria-label="Vieritä alas">
-                <div class="scroll-indicator">
-                    <div class="scroll-dot"></div>
-                </div>
-            </a>
+
+        <div class="hero-scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>Vieritä alas</span>
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- ===== LOGO / TRUST BAR ===== -->
+    <section class="trust-bar-section">
+        <div class="container">
+            <div class="trust-bar-inner">
+                <div class="trust-bar-item">
+                    <div class="trust-bar-number" data-target="100">0</div>
+                    <div class="trust-bar-label">Tyytyväistä asiakasta</div>
+                </div>
+                <div class="trust-bar-divider"></div>
+                <div class="trust-bar-item">
+                    <div class="trust-bar-number" data-target="24">0</div>
+                    <div class="trust-bar-label">h vastausaika</div>
+                </div>
+                <div class="trust-bar-divider"></div>
+                <div class="trust-bar-item">
+                    <div class="trust-bar-number" data-target="100">0</div>
+                    <div class="trust-bar-label">% tyytyväisyys</div>
+                </div>
+                <div class="trust-bar-divider"></div>
+                <div class="trust-bar-item">
+                    <div class="trust-bar-number" data-target="6">0</div>
+                    <div class="trust-bar-label">Palvelualuetta</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SERVICES ===== -->
     <section class="section services" id="palvelut">
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Palvelumme</span>
                 <h2 class="section-title">Kattavat sähköpalvelut<br><span class="text-gradient">kaikenlaisiin tarpeisiin</span></h2>
-                <p class="section-desc">Tarjoamme monipuoliset sähköpalvelut yksityisille, yrityksille ja taloyhtiöille Siilinjärven ja Kuopion alueella.</p>
+                <p class="section-desc">Tarjoamme monipuoliset sähköpalvelut koteihin, yrityksille ja taloyhtiöille.</p>
             </div>
-            <div class="services-grid">
-                <div class="service-card" data-aos="fade-up">
-                    <div class="service-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                    </div>
-                    <h3>Kodin sähkötyöt</h3>
-                    <p>Pistorasioiden ja kytkimien asennukset, valaistussuunnittelu, sähköjärjestelmien päivitykset ja kodin sähkösaneeraukset.</p>
-                    <ul class="service-features">
-                        <li>Pistorasiat ja kytkimet</li>
-                        <li>Valaistusratkaisut</li>
-                        <li>Sähkökeskusten uusiminen</li>
-                    </ul>
+
+            <!-- Featured service - large card -->
+            <div class="service-featured">
+                <div class="service-featured-image">
+                    <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=800&q=80" alt="Sähkösaneeraus">
+                    <div class="featured-badge">Suosituin palvelu</div>
                 </div>
-                <div class="service-card featured" data-aos="fade-up" data-aos-delay="100">
-                    <div class="service-badge">Suosittu</div>
-                    <div class="service-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                <div class="service-featured-content">
+                    <div class="service-featured-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                     </div>
                     <h3>Sähkösaneeraus</h3>
-                    <p>Vanhojen sähköjärjestelmien modernisointi nykyaikaisiksi ja turvallisiksi. Noudatamme kaikissa töissä voimassa olevia sähköturvallisuusmääräyksiä.</p>
-                    <ul class="service-features">
-                        <li>Täydellinen sähkösaneeraus</li>
-                        <li>Ryhmäkeskusten uusiminen</li>
-                        <li>Maadoitusjärjestelmät</li>
+                    <p>Vanhojen sähköjärjestelmien modernisointi nykyaikaisiksi ja turvallisiksi kokonaisuuksiksi. Työ tehdään alusta loppuun ammattitaidolla ja sähköturvallisuusmääräysten mukaisesti.</p>
+                    <ul class="service-check-list">
+                        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Täydellinen sähkösaneeraus suunnittelusta toteutukseen</li>
+                        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Ryhmäkeskukset, kaapeloinnit ja maadoitukset</li>
+                        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Käyttöönottotarkastus ja dokumentaatio</li>
                     </ul>
+                    <a href="#tarjous" class="btn btn-primary">Pyydä tarjous</a>
                 </div>
-                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="service-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+
+            <!-- Service grid -->
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-card-img">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=500&q=80" alt="Kodin sähkötyöt">
                     </div>
-                    <h3>Ilmalämpöpumput</h3>
-                    <p>Ilmalämpöpumppujen myynti, asennus ja huolto. Säästä energiakustannuksissa tehokkailla lämpöpumppuratkaisuilla.</p>
-                    <ul class="service-features">
-                        <li>Asennuspalvelu</li>
-                        <li>Huolto ja korjaus</li>
-                        <li>Energiatehokkuusneuvonta</li>
-                    </ul>
+                    <div class="service-card-body">
+                        <div class="service-icon-sm">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        </div>
+                        <h3>Kodin sähkötyöt</h3>
+                        <p>Pistorasiat, kytkimet, valaistussuunnittelu ja kodin sähköjärjestelmien päivitykset.</p>
+                        <div class="service-tags">
+                            <span>Pistorasiat</span><span>Valaistus</span><span>Keskukset</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="service-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+
+                <div class="service-card">
+                    <div class="service-card-img">
+                        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=500&q=80" alt="Aurinkosähkö">
                     </div>
-                    <h3>Aurinkosähkö</h3>
-                    <p>Aurinkopaneelijärjestelmien suunnittelu ja asennus. Tuota oma sähkösi ja pienennä sähkölaskuasi kestävällä tavalla.</p>
-                    <ul class="service-features">
-                        <li>Järjestelmäsuunnittelu</li>
-                        <li>Paneeliasennus</li>
-                        <li>Invertterit ja akustot</li>
-                    </ul>
+                    <div class="service-card-body">
+                        <div class="service-icon-sm">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+                        </div>
+                        <h3>Aurinkosähkö</h3>
+                        <p>Aurinkopaneelijärjestelmien suunnittelu ja asennus. Tuota oma sähkösi ekologisesti.</p>
+                        <div class="service-tags">
+                            <span>Paneelit</span><span>Invertterit</span><span>Akustot</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="service-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+
+                <div class="service-card">
+                    <div class="service-card-img">
+                        <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=500&q=80" alt="Ilmalämpöpumput">
                     </div>
-                    <h3>Vianetsintä & huolto</h3>
-                    <p>Nopea ja tehokas sähkövianetsintä sekä sähköjärjestelmien huoltopalvelut. Päivystyspalvelu kiireellisissä tilanteissa.</p>
-                    <ul class="service-features">
-                        <li>Vikavirtasuojien testaus</li>
-                        <li>Sähkömittaukset</li>
-                        <li>Ennakkohuolto</li>
-                    </ul>
+                    <div class="service-card-body">
+                        <div class="service-icon-sm">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 16.5a4.5 4.5 0 1 1 7 0"/><line x1="12" y1="12" x2="12" y2="2"/><path d="M12 22v-2"/><path d="M4 12H2"/><path d="M22 12h-2"/></svg>
+                        </div>
+                        <h3>Ilmalämpöpumput</h3>
+                        <p>Myynti, asennus ja huolto. Säästä energiakustannuksissa tehokkailla ratkaisuilla.</p>
+                        <div class="service-tags">
+                            <span>Asennus</span><span>Huolto</span><span>Energiansäästö</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="service-card" data-aos="fade-up" data-aos-delay="500">
-                    <div class="service-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="22" height="12" rx="2"/><line x1="6" y1="10" x2="6" y2="14"/><line x1="18" y1="10" x2="18" y2="14"/></svg>
+
+                <div class="service-card">
+                    <div class="service-card-img">
+                        <img src="https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?auto=format&fit=crop&w=500&q=80" alt="Vianetsintä">
                     </div>
-                    <h3>Sähköautojen lataus</h3>
-                    <p>Sähköautojen latausasemien asennus kotiin tai yrityksen tiloihin. Valmistaudu sähköautojen aikakauteen.</p>
-                    <ul class="service-features">
-                        <li>Kotilatausasemat</li>
-                        <li>Taloyhtiöiden latausratkaisut</li>
-                        <li>Latausinfran suunnittelu</li>
-                    </ul>
+                    <div class="service-card-body">
+                        <div class="service-icon-sm">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                        </div>
+                        <h3>Vianetsintä & huolto</h3>
+                        <p>Nopea sähkövianetsintä ja ennakkohuolto. Päivystyspalvelu kiiretilanteissa.</p>
+                        <div class="service-tags">
+                            <span>Vikavirtasuojat</span><span>Mittaukset</span><span>Päivystys</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-card-img">
+                        <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=500&q=80" alt="Sähköauton lataus">
+                    </div>
+                    <div class="service-card-body">
+                        <div class="service-icon-sm">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="6" width="15" height="12" rx="2"/><path d="M16 10h4a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-4"/><path d="M6 10v4"/><path d="M10 10v4"/></svg>
+                        </div>
+                        <h3>Sähköauton lataus</h3>
+                        <p>Latausasemien asennus kotiin tai yritykseen. Tulevaisuuden ratkaisu tänään.</p>
+                        <div class="service-tags">
+                            <span>Kotilataus</span><span>Taloyhtiöt</span><span>Yritykset</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Why Choose Us -->
+    <!-- ===== WHY US ===== -->
     <section class="section why-us" id="miksi-me">
+        <div class="why-us-bg">
+            <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1920&q=80" alt="" loading="lazy">
+            <div class="why-us-bg-overlay"></div>
+        </div>
         <div class="container">
             <div class="why-us-grid">
                 <div class="why-us-content">
-                    <span class="section-tag">Miksi valita meidät</span>
-                    <h2 class="section-title">Henkilökohtaista palvelua<br><span class="text-gradient">ilman turhia välikäsiä</span></h2>
-                    <p class="section-desc">Yhden miehen yrityksenä pystyn tarjoamaan joustavan ja henkilökohtaisen palvelun. Kun soitat, tavoitat suoraan tekijän – ei välikäsiä, ei odottelua.</p>
-                    <div class="features-list">
-                        <div class="feature-item">
-                            <div class="feature-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            </div>
-                            <div class="feature-text">
-                                <h4>Suora kontakti tekijään</h4>
-                                <p>Ei välikäsiä – sovit työstä suoraan asentajan kanssa. Kommunikointi on helppoa ja nopeaa.</p>
-                            </div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            </div>
-                            <div class="feature-text">
-                                <h4>Joustava aikataulutus</h4>
-                                <p>Pienyrittäjänä pystyn joustamaan aikatauluissa – sovitaan työ sinun aikatauluusi sopivaksi.</p>
-                            </div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            </div>
-                            <div class="feature-text">
-                                <h4>Kilpailukykyinen hinta</h4>
-                                <p>Pienet yleiskustannukset tarkoittavat sinulle edullisempaa hintaa laadukkaasta työstä.</p>
-                            </div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            </div>
-                            <div class="feature-text">
-                                <h4>Takuu kaikille töille</h4>
-                                <p>Kaikki työt tehdään sähköturvallisuusmääräysten mukaisesti ja takuulla.</p>
-                            </div>
-                        </div>
-                    </div>
+                    <span class="section-tag section-tag-light">Miksi SavoMega</span>
+                    <h2 class="section-title section-title-white">Henkilökohtaista palvelua<br><span class="text-gradient">ilman välikäsiä</span></h2>
+                    <p class="why-us-desc">Yhden miehen yrityksenä tavoitat aina suoraan tekijän. Ei odottelua, ei turhaa byrokratiaa &mdash; vain laadukasta sähkötyötä reilulla hinnalla.</p>
                 </div>
-                <div class="why-us-visual">
-                    <div class="visual-card">
-                        <div class="visual-card-inner">
-                            <div class="visual-icon-large">&#9889;</div>
-                            <div class="visual-stats">
-                                <div class="visual-stat">
-                                    <span class="visual-stat-number">Y-tunnus</span>
-                                    <span class="visual-stat-label">2870399-8</span>
-                                </div>
-                                <div class="visual-stat">
-                                    <span class="visual-stat-number">Siilinjärvi</span>
-                                    <span class="visual-stat-label">Pohjois-Savo</span>
-                                </div>
-                            </div>
-                            <div class="trust-badges">
-                                <div class="trust-badge">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                                    <span>Vakuutettu</span>
-                                </div>
-                                <div class="trust-badge">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                                    <span>Pätevä</span>
-                                </div>
-                                <div class="trust-badge">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                                    <span>Luotettava</span>
-                                </div>
-                            </div>
-                        </div>
+                <div class="why-us-cards">
+                    <div class="why-card">
+                        <div class="why-card-number">01</div>
+                        <h4>Suora kontakti</h4>
+                        <p>Sovit työstä suoraan asentajan kanssa. Nopea kommunikaatio ja selkeät sopimukset.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-card-number">02</div>
+                        <h4>Joustava aikataulutus</h4>
+                        <p>Sovitaan työ sinun aikatauluusi. Pienyrittäjänä pystyn reagoimaan nopeasti.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-card-number">03</div>
+                        <h4>Kilpailukykyinen hinta</h4>
+                        <p>Pienet yleiskustannukset = sinulle edullisempi hinta laadukkaasta työstä.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-card-number">04</div>
+                        <h4>Täysi takuu</h4>
+                        <p>Kaikki työt sähköturvallisuusmääräysten mukaan. Takuu jokaiselle asennukselle.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Service Area -->
-    <section class="section service-area" id="toimialue">
+    <!-- ===== PROCESS ===== -->
+    <section class="section process" id="prosessi">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Toimialue</span>
-                <h2 class="section-title">Palvelemme <span class="text-gradient">Pohjois-Savossa</span></h2>
-                <p class="section-desc">Pääasiallinen toimialueemme kattaa Siilinjärven ja Kuopion seudun, mutta palvelemme myös laajemmin Pohjois-Savon alueella.</p>
+                <span class="section-tag">Näin toimimme</span>
+                <h2 class="section-title">Sähkötyöprojektin kulku<br><span class="text-gradient">alusta loppuun</span></h2>
             </div>
-            <div class="area-grid">
-                <div class="area-card primary-area">
-                    <div class="area-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    </div>
-                    <h3>Päätoimialue</h3>
-                    <div class="area-tags">
-                        <span class="area-tag">Siilinjärvi</span>
-                        <span class="area-tag">Kuopio</span>
-                        <span class="area-tag">Maaninka</span>
+            <div class="process-timeline">
+                <div class="process-line"></div>
+                <div class="process-step">
+                    <div class="process-dot">1</div>
+                    <div class="process-card">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80" alt="Yhteydenotto" loading="lazy">
+                        <div class="process-card-body">
+                            <h4>Yhteydenotto</h4>
+                            <p>Soita tai täytä tarjouspyyntölomake. Kartoitetaan tarpeesi ja sovitaan ilmainen arviokäynti.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="area-card">
-                    <div class="area-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <div class="process-step">
+                    <div class="process-dot">2</div>
+                    <div class="process-card">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=400&q=80" alt="Suunnittelu" loading="lazy">
+                        <div class="process-card-body">
+                            <h4>Suunnittelu & tarjous</h4>
+                            <p>Laaditaan selkeä ja kiinteä tarjous. Ei yllätyksiä laskun saapuessa.</p>
+                        </div>
                     </div>
-                    <h3>Laajennettu alue</h3>
-                    <div class="area-tags">
-                        <span class="area-tag">Nilsiä</span>
-                        <span class="area-tag">Lapinlahti</span>
-                        <span class="area-tag">Leppävirta</span>
-                        <span class="area-tag">Suonenjoki</span>
-                        <span class="area-tag">Iisalmi</span>
+                </div>
+                <div class="process-step">
+                    <div class="process-dot">3</div>
+                    <div class="process-card">
+                        <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=400&q=80" alt="Toteutus" loading="lazy">
+                        <div class="process-card-body">
+                            <h4>Ammattitaitoinen toteutus</h4>
+                            <p>Työ tehdään siististi ja sovitussa aikataulussa. Pidämme sinut ajan tasalla.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="process-dot">4</div>
+                    <div class="process-card">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=400&q=80" alt="Valmis" loading="lazy">
+                        <div class="process-card-body">
+                            <h4>Luovutus & takuu</h4>
+                            <p>Käyttöönottotarkastus, dokumentaatio ja takuu. Jälkipalvelu kuuluu kauppaan.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials / References -->
+    <!-- ===== TESTIMONIALS ===== -->
     <section class="section testimonials" id="referenssit">
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Asiakaskokemuksia</span>
                 <h2 class="section-title">Mitä <span class="text-gradient">asiakkaamme sanovat</span></h2>
+                <p class="section-desc">Asiakkaidemme tyytyväisyys puhuu puolestaan.</p>
             </div>
             <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">
+                <div class="testimonial-card testimonial-highlight">
+                    <div class="testimonial-quote">&ldquo;</div>
+                    <p class="testimonial-text">Erittäin ammattitaitoinen ja luotettava sähkömies. Tuli sovittuna aikana ja työ tehtiin huolellisesti. Koko omakotitalon sähkösaneeraus meni täydellisesti. Suosittelen lämpimästi!</p>
+                    <div class="testimonial-rating">
                         <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
                     </div>
-                    <p class="testimonial-text">"Erittäin ammattitaitoinen ja luotettava sähkömies. Tuli sovittuna aikana ja työ tehtiin huolellisesti. Suosittelen lämpimästi!"</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">MK</div>
                         <div>
@@ -321,10 +398,11 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="testimonial-stars">
+                    <div class="testimonial-quote">&ldquo;</div>
+                    <p class="testimonial-text">Koko talon sähkösaneeraus hoitui nopeasti ja siististi. Hinta-laatusuhde erinomainen, kommunikaatio toimi koko projektin ajan.</p>
+                    <div class="testimonial-rating">
                         <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
                     </div>
-                    <p class="testimonial-text">"Koko talon sähkösaneeraus hoitui nopeasti ja siististi. Hinta-laatusuhde erinomainen, ja kommunikaatio toimi koko projektin ajan."</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">AL</div>
                         <div>
@@ -334,10 +412,11 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="testimonial-stars">
+                    <div class="testimonial-quote">&ldquo;</div>
+                    <p class="testimonial-text">Ilmalämpöpumpun asennus sujui nopeasti. Selkeät ohjeet käyttöön ja jälkiseuranta toimi. Suosittelisin kenelle tahansa!</p>
+                    <div class="testimonial-rating">
                         <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
                     </div>
-                    <p class="testimonial-text">"Ilmalämpöpumpun asennus sujui todella nopeasti. Selkeät ohjeet käyttöön ja jälkiseuranta toimi hyvin. Hyvä palvelu!"</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">JP</div>
                         <div>
@@ -350,81 +429,127 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="section cta-section">
+    <!-- ===== SERVICE AREA ===== -->
+    <section class="section service-area" id="toimialue">
         <div class="container">
-            <div class="cta-card">
-                <div class="cta-content">
-                    <h2>Tarvitsetko sähkömiestä?</h2>
-                    <p>Pyydä maksuton ja sitoumukseton tarjous. Vastaamme yhteydenottoihin nopeasti!</p>
+            <div class="area-layout">
+                <div class="area-content">
+                    <span class="section-tag">Toimialue</span>
+                    <h2 class="section-title">Palvelemme<br><span class="text-gradient">Pohjois-Savossa</span></h2>
+                    <p class="section-desc">Pääasiallinen toimialueemme kattaa Siilinjärven ja Kuopion seudun, mutta palvelemme myös laajemmin.</p>
+                    <div class="area-lists">
+                        <div class="area-list-group">
+                            <h4>Päätoimialue</h4>
+                            <ul>
+                                <li><span class="area-dot primary"></span>Siilinjärvi</li>
+                                <li><span class="area-dot primary"></span>Kuopio</li>
+                                <li><span class="area-dot primary"></span>Maaninka</li>
+                            </ul>
+                        </div>
+                        <div class="area-list-group">
+                            <h4>Laajennettu alue</h4>
+                            <ul>
+                                <li><span class="area-dot"></span>Nilsiä</li>
+                                <li><span class="area-dot"></span>Lapinlahti</li>
+                                <li><span class="area-dot"></span>Leppävirta</li>
+                                <li><span class="area-dot"></span>Iisalmi</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="cta-actions">
-                    <a href="#tarjous" class="btn btn-white btn-lg">Pyydä tarjous</a>
-                    <a href="tel:+358XXXXXXXXX" class="btn btn-outline-white btn-lg">Soita nyt</a>
+                <div class="area-map-wrapper">
+                    <div class="area-map-visual">
+                        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=700&q=80" alt="Pohjois-Savo alue" loading="lazy">
+                        <div class="area-map-overlay"></div>
+                        <div class="area-pin area-pin-1"><span>Siilinjärvi</span></div>
+                        <div class="area-pin area-pin-2"><span>Kuopio</span></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- ===== CTA ===== -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-bg-pattern"></div>
+                <div class="cta-inner">
+                    <h2>Tarvitsetko sähkömiestä?</h2>
+                    <p>Pyydä maksuton ja sitoumukseton tarjous &mdash; vastaamme nopeasti.</p>
+                    <div class="cta-actions">
+                        <a href="#tarjous" class="btn btn-white btn-lg">
+                            <span>Pyydä tarjous</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                        <a href="tel:+358XXXXXXXXX" class="btn btn-outline-white btn-lg">Soita nyt</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
     <section class="section contact" id="yhteystiedot">
         <div class="container">
             <div class="contact-grid">
                 <div class="contact-info">
                     <span class="section-tag">Yhteystiedot</span>
                     <h2 class="section-title">Ota <span class="text-gradient">yhteyttä</span></h2>
-                    <p class="section-desc">Vastaamme yhteydenottoihin arkisin 24 tunnin sisällä. Kiireellisissä tapauksissa soita suoraan.</p>
+                    <p class="section-desc">Vastaamme yhteydenottoihin arkisin 24 tunnin sisällä.</p>
 
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <div class="contact-cards">
+                        <a href="tel:+358XXXXXXXXX" class="contact-card-item">
+                            <div class="contact-card-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                             </div>
                             <div>
                                 <strong>Puhelin</strong>
-                                <a href="tel:+358XXXXXXXXX">Soita meille</a>
+                                <span>Soita meille</span>
                             </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        </a>
+                        <a href="mailto:info@savomega.fi" class="contact-card-item">
+                            <div class="contact-card-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                             </div>
                             <div>
                                 <strong>Sähköposti</strong>
-                                <a href="mailto:info@savomega.fi">info@savomega.fi</a>
+                                <span>info@savomega.fi</span>
                             </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                            </div>
-                            <div>
-                                <strong>Toimipaikka</strong>
-                                <span>Siilinjärvi, Pohjois-Savo</span>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </a>
+                        <div class="contact-card-item">
+                            <div class="contact-card-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                             </div>
                             <div>
                                 <strong>Palveluajat</strong>
-                                <span>Ma-Pe 7:00 - 17:00</span>
+                                <span>Ma&ndash;Pe 7:00&ndash;17:00</span>
+                            </div>
+                        </div>
+                        <div class="contact-card-item">
+                            <div class="contact-card-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            </div>
+                            <div>
+                                <strong>Sijainti</strong>
+                                <span>Siilinjärvi, Pohjois-Savo</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="company-info">
-                        <h4>Yritystiedot</h4>
-                        <p><strong>SavoMega Service Ky</strong></p>
-                        <p>Y-tunnus: 2870399-8</p>
-                        <p>Siilinjärvi</p>
+                    <div class="company-info-box">
+                        <span class="company-info-label">Yritystiedot</span>
+                        <strong>SavoMega Service Ky</strong>
+                        <span>Y-tunnus: 2870399-8</span>
                     </div>
                 </div>
 
                 <!-- Contact Form -->
                 <div class="contact-form-wrapper" id="tarjous">
-                    <h3>Pyydä maksuton tarjous</h3>
+                    <div class="form-header">
+                        <h3>Pyydä maksuton tarjous</h3>
+                        <p>Täytä lomake, niin palaamme asiaan pikaisesti.</p>
+                    </div>
                     <form class="contact-form" id="contactForm">
                         <div class="form-group">
                             <label for="name">Nimi *</label>
@@ -444,8 +569,8 @@
                             <label for="service">Palvelu</label>
                             <select id="service" name="service">
                                 <option value="">Valitse palvelu</option>
-                                <option value="kodin-sahkotyot">Kodin sähkötyöt</option>
                                 <option value="sahkosaneeraus">Sähkösaneeraus</option>
+                                <option value="kodin-sahkotyot">Kodin sähkötyöt</option>
                                 <option value="ilmalampopumppu">Ilmalämpöpumppu</option>
                                 <option value="aurinkosahko">Aurinkosähkö</option>
                                 <option value="vianetsinta">Vianetsintä & huolto</option>
@@ -463,7 +588,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary btn-lg btn-full">
                             <span>Lähetä tarjouspyyntö</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                         </button>
                     </form>
                 </div>
@@ -474,42 +599,50 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-grid">
+            <div class="footer-top">
                 <div class="footer-brand">
                     <a href="#hero" class="logo">
-                        <span class="logo-icon">&#9889;</span>
-                        <span class="logo-text">Savo<span class="logo-highlight">Mega</span></span>
+                        <div class="logo-mark">
+                            <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+                                <rect width="40" height="40" rx="10" fill="url(#logoGrad2)"/>
+                                <path d="M22 8L12 22h7l-1.5 10L28 18h-7L22 8z" fill="white"/>
+                                <defs><linearGradient id="logoGrad2" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#2563eb"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs>
+                            </svg>
+                        </div>
+                        <span class="logo-text">SavoMega</span>
                     </a>
-                    <p>Ammattitaitoinen sähköurakoitsija Siilinjärven ja Kuopion seudulla. Luotettavaa palvelua kaikenlaisiin sähkötarpeisiin.</p>
+                    <p class="footer-desc">Ammattitaitoinen sähköurakoitsija Siilinjärven ja Kuopion seudulla. Luotettavaa palvelua kaikenlaisiin sähkötarpeisiin.</p>
                 </div>
-                <div class="footer-links">
-                    <h4>Palvelut</h4>
-                    <ul>
-                        <li><a href="#palvelut">Kodin sähkötyöt</a></li>
-                        <li><a href="#palvelut">Sähkösaneeraus</a></li>
-                        <li><a href="#palvelut">Ilmalämpöpumput</a></li>
-                        <li><a href="#palvelut">Aurinkosähkö</a></li>
-                        <li><a href="#palvelut">Vianetsintä</a></li>
-                        <li><a href="#palvelut">Sähköauton lataus</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4>Yritys</h4>
-                    <ul>
-                        <li><a href="#miksi-me">Tietoa meistä</a></li>
-                        <li><a href="#toimialue">Toimialue</a></li>
-                        <li><a href="#referenssit">Referenssit</a></li>
-                        <li><a href="#yhteystiedot">Yhteystiedot</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4>Ota yhteyttä</h4>
-                    <ul>
-                        <li><a href="tel:+358XXXXXXXXX">Soita meille</a></li>
-                        <li><a href="mailto:info@savomega.fi">info@savomega.fi</a></li>
-                        <li><span>Ma-Pe 7:00-17:00</span></li>
-                        <li><span>Siilinjärvi</span></li>
-                    </ul>
+                <div class="footer-links-grid">
+                    <div class="footer-col">
+                        <h4>Palvelut</h4>
+                        <ul>
+                            <li><a href="#palvelut">Sähkösaneeraus</a></li>
+                            <li><a href="#palvelut">Kodin sähkötyöt</a></li>
+                            <li><a href="#palvelut">Aurinkosähkö</a></li>
+                            <li><a href="#palvelut">Ilmalämpöpumput</a></li>
+                            <li><a href="#palvelut">Sähköauton lataus</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Yritys</h4>
+                        <ul>
+                            <li><a href="#miksi-me">Tietoa meistä</a></li>
+                            <li><a href="#prosessi">Näin toimimme</a></li>
+                            <li><a href="#referenssit">Asiakaskokemukset</a></li>
+                            <li><a href="#toimialue">Toimialue</a></li>
+                            <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Ota yhteyttä</h4>
+                        <ul>
+                            <li><a href="tel:+358XXXXXXXXX">Soita meille</a></li>
+                            <li><a href="mailto:info@savomega.fi">info@savomega.fi</a></li>
+                            <li><span>Ma&ndash;Pe 7:00&ndash;17:00</span></li>
+                            <li><span>Siilinjärvi</span></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
