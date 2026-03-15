@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuntotarkastus – Digitaalinen tarkastussovellus</title>
+    <meta name="description" content="Täytä kuntotarkastuslomake ja generoi ammattimainen PDF-raportti automaattisesti. LVI, sähkö ja rakennustarkastus.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="container header-inner">
+        <a href="../" class="back-link">← UrakoitsijaHub</a>
+        <div class="header-title">
+            <span class="header-icon">🏠</span>
+            <h1>Kuntotarkastus</h1>
+        </div>
+        <div class="header-actions">
+            <span class="progress-text" id="progressText">0 / 40 tarkastettu</span>
+            <button class="btn-generate" id="generateBtn" disabled>Generoi PDF-raportti</button>
+        </div>
+    </div>
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+</header>
+
+<!-- Main -->
+<main class="main">
+    <div class="container">
+
+        <!-- Kohteen tiedot -->
+        <section class="card" id="section-kohde">
+            <div class="card-header">
+                <h2>📍 Kohteen tiedot</h2>
+                <span class="card-status" id="status-kohde">Täytä</span>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Osoite *</label>
+                    <input type="text" id="address" placeholder="Esimerkkikatu 12, Tampere" class="inspection-input">
+                </div>
+                <div class="form-group">
+                    <label>Rakennusvuosi *</label>
+                    <input type="number" id="buildYear" placeholder="esim. 1985" min="1800" max="2025" class="inspection-input">
+                </div>
+                <div class="form-group">
+                    <label>Kiinteistötyyppi</label>
+                    <select id="buildType" class="inspection-input">
+                        <option value="">Valitse</option>
+                        <option value="omakotitalo">Omakotitalo</option>
+                        <option value="rivitalo">Rivitalo / huoneisto</option>
+                        <option value="kerrostalo">Kerrostalohuoneisto</option>
+                        <option value="maalaisrakennus">Maalaisrakennus</option>
+                        <option value="liiketila">Liiketila</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Pinta-ala (m²)</label>
+                    <input type="number" id="area" placeholder="esim. 120" class="inspection-input">
+                </div>
+                <div class="form-group">
+                    <label>Tarkastaja</label>
+                    <input type="text" id="inspector" placeholder="Nimi" class="inspection-input">
+                </div>
+                <div class="form-group">
+                    <label>Tarkastuspäivä</label>
+                    <input type="date" id="inspDate" class="inspection-input">
+                </div>
+            </div>
+        </section>
+
+        <!-- LVI-järjestelmät -->
+        <section class="card" id="section-lvi">
+            <div class="card-header">
+                <h2>🔧 LVI-järjestelmät</h2>
+                <span class="card-status" id="status-lvi">Tarkastamatta</span>
+            </div>
+
+            <div class="subsection">
+                <h3>Putkisto</h3>
+                <div class="check-grid">
+                    <div class="check-item" data-category="lvi">
+                        <div class="check-label">
+                            <span class="check-title">Kylmävesiputket</span>
+                            <span class="check-desc">Kunto, vuodot, eristys</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                    <div class="check-item" data-category="lvi">
+                        <div class="check-label">
+                            <span class="check-title">Lämminvesiputket</span>
+                            <span class="check-desc">Kunto, lämpötila, vuodot</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                    <div class="check-item" data-category="lvi">
+                        <div class="check-label">
+                            <span class="check-title">Viemäriputket</span>
+                            <span class="check-desc">Tukokset, kunto, hajut</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                    <div class="check-item" data-category="lvi">
+                        <div class="check-label">
+                            <span class="check-title">Vesimittari</span>
+                            <span class="check-desc">Toimivuus, lukema, ikä</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Lämmitysjärjestelmä</h3>
+                <div class="check-grid">
+                    <div class="check-item" data-category="lvi">
+                        <div class="check-label">
+                            <span class="check-title">Lämmityskattila / lämpöpumppu</span>
+                            <span class="check-desc">Ikä, kunto, teho</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                    <div class="check-item" data-category="lvi">
+                        <div class="check-label">
+                            <span class="check-title">Patterit ja venttiilitit</span>
+                            <span class="check-desc">Toimivuus, ilmaus, vuodot</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                    <div class="check-item" data-category="lvi">
+                        <div class="check-label">
+                            <span class="check-title">Lämminvesivaraaja</span>
+                            <span class="check-desc">Ikä, koko, kunto</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                    <div class="check-item" data-category="lvi">
+                        <div class="check-label">
+                            <span class="check-title">Lattialämmitys</span>
+                            <span class="check-desc">Toimivuus, termostaatit</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Ilmanvaihto</h3>
+                <div class="check-grid">
+                    <div class="check-item" data-category="lvi">
+                        <div class="check-label">
+                            <span class="check-title">Ilmanvaihtokone</span>
+                            <span class="check-desc">Kunto, suodattimet, toimivuus</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                    <div class="check-item" data-category="lvi">
+                        <div class="check-label">
+                            <span class="check-title">Kanavisto ja venttiilit</span>
+                            <span class="check-desc">Puhtaus, virtaukset</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sähköjärjestelmät -->
+        <section class="card" id="section-sahko">
+            <div class="card-header">
+                <h2>⚡ Sähköjärjestelmät</h2>
+                <span class="card-status" id="status-sahko">Tarkastamatta</span>
+            </div>
+
+            <div class="subsection">
+                <h3>Pääkeskus ja jakokeskukset</h3>
+                <div class="check-grid">
+                    <div class="check-item" data-category="sahko">
+                        <div class="check-label">
+                            <span class="check-title">Pääkeskus</span>
+                            <span class="check-desc">Kunto, merkintä, vikavirtasuojat</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                    <div class="check-item" data-category="sahko">
+                        <div class="check-label">
+                            <span class="check-title">Vikavirtasuojat</span>
+                            <span class="check-desc">Testaus, toimivuus, sijainnit</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                    <div class="check-item" data-category="sahko">
+                        <div class="check-label">
+                            <span class="check-title">Sulakkeet ja johdonsuojakatkaisijat</span>
+                            <span class="check-desc">Mitoitus, merkintä</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                    <div class="check-item" data-category="sahko">
+                        <div class="check-label">
+                            <span class="check-title">Maadoitus</span>
+                            <span class="check-desc">Jatkuvuus, kunto</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Johdotukset ja asennukset</h3>
+                <div class="check-grid">
+                    <div class="check-item" data-category="sahko">
+                        <div class="check-label">
+                            <span class="check-title">Pistorasiat</span>
+                            <span class="check-desc">Kunto, kiinnitys, oikea jännitteentyypin käyttö</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                    <div class="check-item" data-category="sahko">
+                        <div class="check-label">
+                            <span class="check-title">Kytkimet ja kojeistot</span>
+                            <span class="check-desc">Kunto, toimivuus</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                    <div class="check-item" data-category="sahko">
+                        <div class="check-label">
+                            <span class="check-title">Kaapeloinnit</span>
+                            <span class="check-desc">Ikä, eristys, näkyvät vauriot</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                    <div class="check-item" data-category="sahko">
+                        <div class="check-label">
+                            <span class="check-title">Valaistus</span>
+                            <span class="check-desc">Toimivuus, turvallisuus</span>
+                        </div>
+                        <div class="check-controls">
+                            <button class="rating-btn" data-value="ok">OK</button>
+                            <button class="rating-btn" data-value="huomio">Huomio</button>
+                            <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                            <button class="rating-btn" data-value="na">N/A</button>
+                        </div>
+                        <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rakennustekniikka -->
+        <section class="card" id="section-rakenne">
+            <div class="card-header">
+                <h2>🏗️ Rakennustekniikka</h2>
+                <span class="card-status" id="status-rakenne">Tarkastamatta</span>
+            </div>
+
+            <div class="check-grid">
+                <div class="check-item" data-category="rakenne">
+                    <div class="check-label">
+                        <span class="check-title">Perustukset</span>
+                        <span class="check-desc">Halkeamat, kosteus, routavauriot</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+                <div class="check-item" data-category="rakenne">
+                    <div class="check-label">
+                        <span class="check-title">Julkisivu</span>
+                        <span class="check-desc">Kunto, maalaus, tiivistykset</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+                <div class="check-item" data-category="rakenne">
+                    <div class="check-label">
+                        <span class="check-title">Katto ja yläpohja</span>
+                        <span class="check-desc">Kunto, eristys, kosteusvauriot</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+                <div class="check-item" data-category="rakenne">
+                    <div class="check-label">
+                        <span class="check-title">Kosteusvauriot</span>
+                        <span class="check-desc">Home, kosteus, värimuutokset</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+                <div class="check-item" data-category="rakenne">
+                    <div class="check-label">
+                        <span class="check-title">Ikkunat ja ovet</span>
+                        <span class="check-desc">Tiivistykset, toimivuus, eristys</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+                <div class="check-item" data-category="rakenne">
+                    <div class="check-label">
+                        <span class="check-title">Kellari / ryömintätila</span>
+                        <span class="check-desc">Kosteus, ilmanvaihto, kunto</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+            </div>
+        </section>
+
+        <!-- Märkätilat -->
+        <section class="card" id="section-markatilat">
+            <div class="card-header">
+                <h2>🚿 Märkätilat</h2>
+                <span class="card-status" id="status-markatilat">Tarkastamatta</span>
+            </div>
+
+            <div class="check-grid">
+                <div class="check-item" data-category="markatilat">
+                    <div class="check-label">
+                        <span class="check-title">Kylpyhuoneen vedeneristys</span>
+                        <span class="check-desc">Silmämääräinen tarkastus</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+                <div class="check-item" data-category="markatilat">
+                    <div class="check-label">
+                        <span class="check-title">Lattiakaivo</span>
+                        <span class="check-desc">Toimivuus, hajulukko, kunto</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+                <div class="check-item" data-category="markatilat">
+                    <div class="check-label">
+                        <span class="check-title">Suihku/kylpyamme</span>
+                        <span class="check-desc">Kunto, tiivistykset</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+                <div class="check-item" data-category="markatilat">
+                    <div class="check-label">
+                        <span class="check-title">WC-istuin</span>
+                        <span class="check-desc">Vuodot, toimivuus</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+                <div class="check-item" data-category="markatilat">
+                    <div class="check-label">
+                        <span class="check-title">Pesuallas ja hanat</span>
+                        <span class="check-desc">Kunto, vuodot</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+                <div class="check-item" data-category="markatilat">
+                    <div class="check-label">
+                        <span class="check-title">Laattapinnat</span>
+                        <span class="check-desc">Saumat, halkeamat, irtoilu</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+            </div>
+        </section>
+
+        <!-- Turvallisuus -->
+        <section class="card" id="section-turvallisuus">
+            <div class="card-header">
+                <h2>🛡️ Turvallisuus</h2>
+                <span class="card-status" id="status-turvallisuus">Tarkastamatta</span>
+            </div>
+
+            <div class="check-grid">
+                <div class="check-item" data-category="turvallisuus">
+                    <div class="check-label">
+                        <span class="check-title">Palovaroittimet</span>
+                        <span class="check-desc">Määrä, sijainti, toimivuus</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+                <div class="check-item" data-category="turvallisuus">
+                    <div class="check-label">
+                        <span class="check-title">Sammutin</span>
+                        <span class="check-desc">Saatavilla, tarkastettu</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+                <div class="check-item" data-category="turvallisuus">
+                    <div class="check-label">
+                        <span class="check-title">Poistumistiet</span>
+                        <span class="check-desc">Esteetön pääsy, merkintä</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+                <div class="check-item" data-category="turvallisuus">
+                    <div class="check-label">
+                        <span class="check-title">Turvalukot ja lukitukset</span>
+                        <span class="check-desc">Kunto, toimivuus</span>
+                    </div>
+                    <div class="check-controls">
+                        <button class="rating-btn" data-value="ok">OK</button>
+                        <button class="rating-btn" data-value="huomio">Huomio</button>
+                        <button class="rating-btn" data-value="korjaus">Korjaus</button>
+                        <button class="rating-btn" data-value="na">N/A</button>
+                    </div>
+                    <textarea class="check-note" placeholder="Huomiot..."></textarea>
+                </div>
+            </div>
+        </section>
+
+        <!-- Yhteenveto ja lisätiedot -->
+        <section class="card" id="section-yhteenveto">
+            <div class="card-header">
+                <h2>📝 Yhteenveto ja lisätiedot</h2>
+            </div>
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label>Yleisarvio kohteesta</label>
+                    <div class="rating-overall">
+                        <button class="overall-btn" data-val="hyva">Hyvä kunto</button>
+                        <button class="overall-btn" data-val="tyydyttava">Tyydyttävä</button>
+                        <button class="overall-btn" data-val="heikko">Heikko kunto</button>
+                        <button class="overall-btn" data-val="kriittinen">Kriittinen</button>
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <label>Kiireelliset korjaussuositukset</label>
+                    <textarea id="urgentFixes" rows="4" placeholder="Listaa kiireelliset korjaustarpeet..." class="inspection-input"></textarea>
+                </div>
+                <div class="form-group full-width">
+                    <label>Lisähuomiot ja tarkastajan kommentit</label>
+                    <textarea id="additionalNotes" rows="4" placeholder="Muut havainnot, suositukset jatkotutkimuksille..." class="inspection-input"></textarea>
+                </div>
+                <div class="form-group full-width">
+                    <label>Arvioidut korjauskustannukset</label>
+                    <div class="cost-estimate">
+                        <div class="cost-item">
+                            <label>Välittömät (€)</label>
+                            <input type="number" id="costImmediate" placeholder="0" class="inspection-input">
+                        </div>
+                        <div class="cost-item">
+                            <label>1-3 vuoden sisällä (€)</label>
+                            <input type="number" id="costShort" placeholder="0" class="inspection-input">
+                        </div>
+                        <div class="cost-item">
+                            <label>3-10 vuoden sisällä (€)</label>
+                            <input type="number" id="costLong" placeholder="0" class="inspection-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Generate button -->
+        <div class="generate-section">
+            <div class="summary-bar">
+                <div class="summary-item">
+                    <span class="summary-icon ok-color">✓</span>
+                    <span id="countOk">0</span> OK
+                </div>
+                <div class="summary-item">
+                    <span class="summary-icon warn-color">⚠</span>
+                    <span id="countHuomio">0</span> Huomio
+                </div>
+                <div class="summary-item">
+                    <span class="summary-icon error-color">✗</span>
+                    <span id="countKorjaus">0</span> Korjaus
+                </div>
+            </div>
+            <button class="btn-generate-lg" id="generateBtnBottom">📄 Generoi PDF-raportti</button>
+            <p class="generate-note">Raportti luodaan selaimessa – ei dataa lähetetä palvelimelle</p>
+        </div>
+
+    </div>
+</main>
+
+<!-- Report Modal -->
+<div class="modal-overlay" id="reportModal" style="display:none;">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Kuntotarkastusraportti</h2>
+            <button class="modal-close" id="modalClose">✕</button>
+        </div>
+        <div class="modal-body" id="reportContent">
+            <!-- Generated dynamically -->
+        </div>
+        <div class="modal-footer">
+            <button class="btn-primary" onclick="window.print()">🖨️ Tulosta / Tallenna PDF</button>
+            <button class="btn-outline" id="modalClose2">Sulje</button>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

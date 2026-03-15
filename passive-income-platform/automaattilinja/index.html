@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automaattilinja – Liidien automaattinen jakelu</title>
+    <meta name="description" content="Automaattinen liidinjakelujärjestelmä LVI ja sähköpalveluille. Hallinnoi urakoitsijoita, seuraa liidejä ja automatisoi laskutus.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="container header-inner">
+        <a href="../" class="back-link">← UrakoitsijaHub</a>
+        <div class="header-brand">
+            <span>⚡</span>
+            <h1>Automaattilinja</h1>
+            <span class="live-badge">LIVE</span>
+        </div>
+        <button class="btn-add" id="btnAddLead">+ Uusi liidi</button>
+    </div>
+</header>
+
+<!-- Dashboard -->
+<main class="main">
+    <div class="container">
+
+        <!-- Stats -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-icon blue">📥</div>
+                <div>
+                    <div class="stat-num" id="statTotal">0</div>
+                    <div class="stat-label">Liidejä yhteensä</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green">✓</div>
+                <div>
+                    <div class="stat-num" id="statSent">0</div>
+                    <div class="stat-label">Lähetetty</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon orange">⏳</div>
+                <div>
+                    <div class="stat-num" id="statPending">0</div>
+                    <div class="stat-label">Odottaa</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple">💰</div>
+                <div>
+                    <div class="stat-num" id="statRevenue">0 €</div>
+                    <div class="stat-label">Arvioitu tulo</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main layout -->
+        <div class="dashboard-grid">
+
+            <!-- Leads panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Tulevat liidit</h2>
+                    <div class="panel-filters">
+                        <button class="filter-btn active" data-filter="all">Kaikki</button>
+                        <button class="filter-btn" data-filter="lvi">LVI</button>
+                        <button class="filter-btn" data-filter="sahko">Sähkö</button>
+                        <button class="filter-btn" data-filter="pending">Odottaa</button>
+                    </div>
+                </div>
+                <div class="leads-list" id="leadsList">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Contractors panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Urakoitsijat</h2>
+                    <button class="btn-sm" id="btnAddContractor">+ Lisää</button>
+                </div>
+                <div class="contractors-list" id="contractorsList">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Routing rules -->
+                <div class="routing-section">
+                    <h3>Jakelusäännöt</h3>
+                    <div class="rule-item">
+                        <div class="rule-label">LVI-liidit → Lähin urakoitsija</div>
+                        <label class="toggle">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-label">Sähköliidit → Kiertojärjestys</div>
+                        <label class="toggle">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-label">Automaattinen SMS-ilmoitus</div>
+                        <label class="toggle">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-label">Automaattinen laskutus (Stripe)</div>
+                        <label class="toggle">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Activity log -->
+        <div class="panel" style="margin-top:24px;">
+            <div class="panel-header">
+                <h2>Tapahtumaloki</h2>
+                <span class="log-badge">Automaatti</span>
+            </div>
+            <div class="activity-log" id="activityLog">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Integration info -->
+        <div class="integration-grid">
+            <div class="integration-card">
+                <div class="int-icon">📧</div>
+                <div>
+                    <h3>Sähköposti-integraatio</h3>
+                    <p>Liidit tallennetaan automaattisesti kun asiakas täyttää lomakkeen sivustollasi.</p>
+                </div>
+                <div class="int-status connected">Yhdistetty</div>
+            </div>
+            <div class="integration-card">
+                <div class="int-icon">💳</div>
+                <div>
+                    <h3>Stripe-laskutus</h3>
+                    <p>Automaattinen laskutus urakoitsijoilta per-liidi tai kuukausitilaus.</p>
+                </div>
+                <div class="int-status pending">Asenna</div>
+            </div>
+            <div class="integration-card">
+                <div class="int-icon">📱</div>
+                <div>
+                    <h3>SMS-ilmoitukset</h3>
+                    <p>Urakoitsijat saavat tekstiviestin heti kun uusi liidi on heille.</p>
+                </div>
+                <div class="int-status pending">Asenna</div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- Add Lead Modal -->
+<div class="modal-overlay" id="leadModal" style="display:none;">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Lisää uusi liidi</h2>
+            <button class="modal-close" id="leadModalClose">✕</button>
+        </div>
+        <div class="modal-body">
+            <form id="leadForm" class="form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Asiakkaan nimi *</label>
+                        <input type="text" id="leadName" placeholder="Matti Meikäläinen" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Puhelin *</label>
+                        <input type="tel" id="leadPhone" placeholder="040 123 4567" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Sähköposti</label>
+                    <input type="email" id="leadEmail" placeholder="asiakas@esimerkki.fi">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Palvelutyyppi *</label>
+                        <select id="leadType" required>
+                            <option value="">Valitse</option>
+                            <option value="lvi">LVI-työ</option>
+                            <option value="sahko">Sähkötyö</option>
+                            <option value="tarkastus">Kuntotarkastus</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Kiireellisyys</label>
+                        <select id="leadUrgency">
+                            <option value="normaali">Normaali</option>
+                            <option value="kiireellinen">Kiireellinen</option>
+                            <option value="paivystys">Päivystys</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Paikkakunta</label>
+                    <input type="text" id="leadCity" placeholder="Tampere">
+                </div>
+                <div class="form-group">
+                    <label>Kuvaus</label>
+                    <textarea id="leadDesc" rows="3" placeholder="Asiakkaan kuvaus tarpeesta..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Liidihinta (€)</label>
+                        <input type="number" id="leadPrice" value="65" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Lähetä automaattisesti</label>
+                        <select id="leadAutoSend">
+                            <option value="yes">Kyllä – valitse paras urakoitsija</option>
+                            <option value="no">Ei – käsittele manuaalisesti</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Lisää ja jaa liidi</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Contractor Modal -->
+<div class="modal-overlay" id="contractorModal" style="display:none;">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Lisää urakoitsija</h2>
+            <button class="modal-close" id="contractorModalClose">✕</button>
+        </div>
+        <div class="modal-body">
+            <form id="contractorForm" class="form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Yrityksen nimi *</label>
+                        <input type="text" id="contractorName" placeholder="LVI Esimerkki Oy" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Yhteyshenkilö</label>
+                        <input type="text" id="contractorContact" placeholder="Pekka Virtanen">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Puhelin *</label>
+                        <input type="tel" id="contractorPhone" placeholder="040 123 4567" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Sähköposti</label>
+                        <input type="email" id="contractorEmail" placeholder="info@yritys.fi">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Erikoisala</label>
+                        <select id="contractorType">
+                            <option value="lvi">LVI</option>
+                            <option value="sahko">Sähkö</option>
+                            <option value="molemmat">Molemmat</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Toimialue</label>
+                        <input type="text" id="contractorArea" placeholder="Tampere, Pirkanmaa">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Liidihinta (€/kpl)</label>
+                        <input type="number" id="contractorLeadPrice" placeholder="65" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Maks. liidejä/kk</label>
+                        <input type="number" id="contractorMaxLeads" placeholder="20" min="1">
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Lisää urakoitsija</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
