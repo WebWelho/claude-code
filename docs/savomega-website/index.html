@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SavoMega Service Ky | Sähkötyöt Siilinjärvi & Kuopio</title>
+    <meta name="description" content="SavoMega Service Ky - Luotettavat sähkötyöt Siilinjärven ja Kuopion alueella. Ammattitaitoinen sähköurakoitsija. Pyydä maksuton tarjous!">
+    <meta name="keywords" content="sähkötyöt, sähköasennus, sähkömies, Siilinjärvi, Kuopio, Pohjois-Savo, sähkösaneeraus, ilmalämpöpumppu">
+    <meta name="author" content="SavoMega Service Ky">
+    <meta property="og:title" content="SavoMega Service Ky - Sähkötyöt Siilinjärvi">
+    <meta property="og:description" content="Ammattitaitoinen sähköurakoitsija Siilinjärven ja Kuopion alueella. Pyydä maksuton tarjous!">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Sticky Top Bar -->
+<div class="top-bar">
+    <div class="container top-bar-content">
+        <span class="top-bar-text">
+            <span class="pulse-dot"></span>
+            Ammattitaitoinen sähköurakoitsija – Siilinjärvi & Kuopio
+        </span>
+        <a href="tel:+358XXXXXXXXX" class="top-bar-phone">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            Soita meille
+        </a>
+    </div>
+</div>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+    <div class="container nav-content">
+        <a href="#" class="logo">
+            <span class="logo-icon">&#9889;</span>
+            <div class="logo-text">Savo<span>Mega</span></div>
+        </a>
+        <div class="nav-links" id="navLinks">
+            <a href="#palvelut">Palvelut</a>
+            <a href="#miksi-me">Miksi me</a>
+            <a href="#toimialue">Toimialue</a>
+            <a href="#referenssit">Referenssit</a>
+            <a href="#yhteystiedot">Yhteystiedot</a>
+        </div>
+        <a href="#tarjous" class="nav-cta">Pyydä tarjous</a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Avaa valikko">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- HERO – Full viewport with background image -->
+<section class="hero" style="background-image: url('https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=1920&q=85')">
+    <div class="hero-overlay"></div>
+    <div class="hero-particles" id="particles"></div>
+    <div class="container hero-content">
+        <div class="hero-badge animate-in">
+            <span class="badge-dot"></span>
+            Ammattitaitoinen sähköurakoitsija
+        </div>
+        <h1 class="hero-title animate-in d1">
+            Luotettavat <span class="hero-highlight">sähkötyöt</span><br>
+            Siilinjärven seudulla
+        </h1>
+        <p class="hero-subtitle animate-in d2">
+            SavoMega Service Ky tarjoaa monipuoliset sähköasennuspalvelut<br class="hide-mobile">
+            koteihin ja yrityksille. Henkilökohtaista palvelua, joustavasti ja ammattitaidolla.
+        </p>
+        <div class="hero-ctas animate-in d3">
+            <a href="#tarjous" class="btn-hero-primary">
+                Pyydä maksuton tarjous
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <span class="btn-shimmer"></span>
+            </a>
+            <a href="tel:+358XXXXXXXXX" class="btn-hero-outline">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                Soita meille
+            </a>
+        </div>
+        <div class="hero-trust animate-in d4">
+            <div class="trust-pill">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                100% Tyytyväisyys
+            </div>
+            <div class="trust-pill">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Nopea reagointi
+            </div>
+            <div class="trust-pill">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Vakuutettu & pätevä
+            </div>
+        </div>
+    </div>
+    <div class="hero-scroll-indicator">
+        <span>Selaa alas</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+</section>
+
+<!-- Stats Bar -->
+<section class="stats-bar">
+    <div class="container stats-grid">
+        <div class="stat-item" data-animate>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="stat-number">24h</div>
+            <div class="stat-text">Nopea reagointi</div>
+        </div>
+        <div class="stat-item" data-animate>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <div class="stat-number">100%</div>
+            <div class="stat-text">Tyytyväisyys</div>
+        </div>
+        <div class="stat-item" data-animate>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="stat-number">100+</div>
+            <div class="stat-text">Tyytyväistä asiakasta</div>
+        </div>
+        <div class="stat-item" data-animate>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="stat-number">Pohjois-Savo</div>
+            <div class="stat-text">Palvelualue</div>
+        </div>
+    </div>
+</section>
+
+<!-- Problem Section -->
+<section class="problem-section">
+    <div class="problem-bg"></div>
+    <div class="container">
+        <div class="section-header light" data-animate>
+            <span class="section-tag light-tag">Tunnistatkö nämä?</span>
+            <h2>Yleisimmät sähköongelmat</h2>
+        </div>
+        <div class="problem-grid">
+            <div class="problem-card glass" data-animate>
+                <div class="problem-emoji">😤</div>
+                <h3>Sähkömies ei vastaa?</h3>
+                <p>Me vastaamme aina – joustavasti ja nopeasti myös kiireellisissä tilanteissa.</p>
+                <div class="problem-solution">Ratkaisu: Soita, vastaamme heti</div>
+            </div>
+            <div class="problem-card glass" data-animate>
+                <div class="problem-emoji">😰</div>
+                <h3>Pelkäätkö yllätyslaskua?</h3>
+                <p>Selkeä ja kilpailukykyinen hinnoittelu. Kerromme aina etukäteen mitä työ maksaa.</p>
+                <div class="problem-solution">Ratkaisu: Läpinäkyvä hinta</div>
+            </div>
+            <div class="problem-card glass" data-animate>
+                <div class="problem-emoji">⏳</div>
+                <h3>Viikkojen odotus?</h3>
+                <p>Joustava aikataulutus – sovitaan työ sinun aikatauluusi sopivaksi.</p>
+                <div class="problem-solution">Ratkaisu: Nopea aikataulutus</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services with Photo Backgrounds -->
+<section class="services-section" id="palvelut">
+    <div class="container">
+        <div class="section-header" data-animate>
+            <span class="section-tag">Palvelumme</span>
+            <h2>Kattavat sähköpalvelut <span class="text-gradient">yhdestä paikasta</span></h2>
+            <p class="section-desc">Kodin sähkötöistä suuriin saneerauksiin – ammattitaidolla ja takuulla.</p>
+        </div>
+        <div class="services-showcase">
+            <div class="service-big" data-animate>
+                <div class="service-big-bg" style="background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80')"></div>
+                <div class="service-big-overlay"></div>
+                <div class="service-big-content">
+                    <span class="service-tag-label">Suosituin palvelu</span>
+                    <h3>Sähkösaneeraus</h3>
+                    <p>Vanhojen sähköjärjestelmien modernisointi nykyaikaisiksi ja turvallisiksi. Noudatamme kaikissa töissä voimassa olevia sähköturvallisuusmääräyksiä.</p>
+                    <ul>
+                        <li>Täydellinen sähkösaneeraus</li>
+                        <li>Ryhmäkeskusten uusiminen</li>
+                        <li>Maadoitusjärjestelmät</li>
+                        <li>Sähkömittaukset</li>
+                    </ul>
+                    <a href="#tarjous" class="btn-service">Kysy tarjous &#8594;</a>
+                </div>
+            </div>
+            <div class="services-side">
+                <div class="service-card-img" data-animate>
+                    <div class="service-card-bg" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80')"></div>
+                    <div class="service-card-overlay"></div>
+                    <div class="service-card-text">
+                        <h3>Kodin sähkötyöt</h3>
+                        <p>Pistorasiat, kytkimet, valaistus, sähkökeskukset</p>
+                        <span class="service-arrow">&#8594;</span>
+                    </div>
+                </div>
+                <div class="service-card-img" data-animate>
+                    <div class="service-card-bg" style="background-image: url('https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=600&q=80')"></div>
+                    <div class="service-card-overlay"></div>
+                    <div class="service-card-text">
+                        <h3>Ilmalämpöpumput</h3>
+                        <p>Myynti, asennus ja huolto – säästä energiakustannuksissa</p>
+                        <span class="service-arrow">&#8594;</span>
+                    </div>
+                </div>
+                <div class="service-card-img" data-animate>
+                    <div class="service-card-bg" style="background-image: url('https://images.unsplash.com/photo-1509391111896-e93accd79497?w=600&q=80')"></div>
+                    <div class="service-card-overlay"></div>
+                    <div class="service-card-text">
+                        <h3>Aurinkosähkö & lataus</h3>
+                        <p>Aurinkopaneelit, sähköautojen latausasemat</p>
+                        <span class="service-arrow">&#8594;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Work Gallery -->
+<section class="gallery-section">
+    <div class="container">
+        <div class="section-header" data-animate>
+            <span class="section-tag">Työnäytteitä</span>
+            <h2>Ammattitaitoa <span class="text-gradient">käytännössä</span></h2>
+            <p class="section-desc">Laadukasta työtä sähköasennuksissa, lämpöpumppuasennuksissa ja saneerauksissa.</p>
+        </div>
+        <div class="gallery-grid" data-animate>
+            <div class="gallery-item gallery-wide">
+                <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80" alt="Sähkökeskus" loading="lazy">
+                <div class="gallery-label">Sähkökeskuksen asennus</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=600&q=80" alt="Ilmalämpöpumppu" loading="lazy">
+                <div class="gallery-label">Ilmalämpöpumppu</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1509391111896-e93accd79497?w=600&q=80" alt="Aurinkopaneelit" loading="lazy">
+                <div class="gallery-label">Aurinkosähkö</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80" alt="Sähkötyökalut" loading="lazy">
+                <div class="gallery-label">Ammattilaisvälineet</div>
+            </div>
+            <div class="gallery-item gallery-wide">
+                <img src="https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=800&q=80" alt="Sähköasennus" loading="lazy">
+                <div class="gallery-label">Sähköasennustyö</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Us -->
+<section class="why-section" id="miksi-me">
+    <div class="container">
+        <div class="section-header" data-animate>
+            <span class="section-tag">Miksi SavoMega</span>
+            <h2>Henkilökohtaista palvelua <span class="text-gradient">ilman välikäsiä</span></h2>
+        </div>
+        <div class="why-layout">
+            <div class="why-cards">
+                <div class="why-card" data-animate>
+                    <div class="why-icon">&#9889;</div>
+                    <div><h3>Suora kontakti tekijään</h3><p>Ei välikäsiä – sovit työstä suoraan asentajan kanssa. Kommunikointi on helppoa ja nopeaa.</p></div>
+                </div>
+                <div class="why-card" data-animate>
+                    <div class="why-icon">&#128176;</div>
+                    <div><h3>Kilpailukykyinen hinta</h3><p>Pienet yleiskustannukset tarkoittavat sinulle edullisempaa hintaa laadukkaasta työstä.</p></div>
+                </div>
+                <div class="why-card" data-animate>
+                    <div class="why-icon">&#127942;</div>
+                    <div><h3>Joustava aikataulutus</h3><p>Pienyrittäjänä pystyn joustamaan aikatauluissa – sovitaan työ sinun aikatauluusi.</p></div>
+                </div>
+                <div class="why-card" data-animate>
+                    <div class="why-icon">&#129309;</div>
+                    <div><h3>Takuu kaikille töille</h3><p>Kaikki työt tehdään sähköturvallisuusmääräysten mukaisesti ja takuulla.</p></div>
+                </div>
+            </div>
+            <div class="why-profile" data-animate>
+                <div class="profile-card">
+                    <div class="profile-glow"></div>
+                    <div class="profile-avatar">SM</div>
+                    <div class="profile-status"><span class="pulse-dot-green"></span>Vapaita aikoja</div>
+                    <h3>SavoMega Service Ky</h3>
+                    <p class="profile-role">Sähköurakoitsija – Siilinjärvi</p>
+                    <div class="profile-stats">
+                        <div><strong>100%</strong><span>Tyytyväisyys</span></div>
+                        <div><strong>24h</strong><span>Reagointi</span></div>
+                    </div>
+                    <blockquote>"Henkilökohtaista palvelua, joustavasti ja ammattitaidolla"</blockquote>
+                    <a href="#tarjous" class="btn-profile">Pyydä tarjous</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Service Area -->
+<section class="area-section" id="toimialue">
+    <div class="area-bg"></div>
+    <div class="container">
+        <div class="section-header light" data-animate>
+            <span class="section-tag light-tag">Toimialue</span>
+            <h2>Palvelemme koko <span class="text-gradient-cyan">Pohjois-Savon</span> alueella</h2>
+        </div>
+        <div class="area-grid">
+            <div class="area-card glass" data-animate>
+                <div class="area-card-header">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <h3>Päätoimialue</h3>
+                </div>
+                <div class="area-tags">
+                    <span class="area-tag primary">Siilinjärvi</span>
+                    <span class="area-tag primary">Kuopio</span>
+                    <span class="area-tag primary">Maaninka</span>
+                </div>
+            </div>
+            <div class="area-card glass" data-animate>
+                <div class="area-card-header">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                    <h3>Laajennettu alue</h3>
+                </div>
+                <div class="area-tags">
+                    <span class="area-tag">Nilsiä</span>
+                    <span class="area-tag">Lapinlahti</span>
+                    <span class="area-tag">Leppävirta</span>
+                    <span class="area-tag">Suonenjoki</span>
+                    <span class="area-tag">Iisalmi</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Google Reviews -->
+<section class="google-reviews-section" id="referenssit">
+    <div class="container">
+        <div class="section-header" data-animate>
+            <span class="section-tag">Asiakaskokemuksia</span>
+            <h2>Mitä <span class="text-gradient">asiakkaamme sanovat</span></h2>
+            <div class="google-rating-summary">
+                <svg class="google-logo" width="24" height="24" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                <div class="google-rating-text">
+                    <span class="google-score">5.0</span>
+                    <span class="google-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    <span class="google-count">Google-arvostelut</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="google-reviews-carousel" data-animate>
+            <button class="carousel-btn carousel-prev" id="reviewPrev" aria-label="Edellinen">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+
+            <div class="carousel-track-wrapper">
+                <div class="carousel-track" id="reviewTrack">
+                    <div class="google-review-card">
+                        <div class="g-review-header">
+                            <div class="g-avatar" style="background: #1a73e8;">MK</div>
+                            <div class="g-reviewer">
+                                <strong>Matti K.</strong>
+                                <span>6 kuukautta sitten</span>
+                            </div>
+                            <svg class="g-logo" width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                        </div>
+                        <div class="g-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <svg class="g-verified" width="14" height="14" viewBox="0 0 24 24" fill="#4285F4"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
+                        <p class="g-text">Erittäin ammattitaitoinen ja luotettava sähkömies. Tuli sovittuna aikana ja työ tehtiin huolellisesti. Suosittelen lämpimästi!</p>
+                    </div>
+
+                    <div class="google-review-card">
+                        <div class="g-review-header">
+                            <div class="g-avatar" style="background: #ea4335;">AL</div>
+                            <div class="g-reviewer">
+                                <strong>Anna L.</strong>
+                                <span>1 vuosi sitten</span>
+                            </div>
+                            <svg class="g-logo" width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                        </div>
+                        <div class="g-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <svg class="g-verified" width="14" height="14" viewBox="0 0 24 24" fill="#4285F4"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
+                        <p class="g-text">Koko talon sähkösaneeraus hoitui nopeasti ja siististi. Hinta-laatusuhde erinomainen, ja kommunikaatio toimi koko projektin ajan.</p>
+                    </div>
+
+                    <div class="google-review-card">
+                        <div class="g-review-header">
+                            <div class="g-avatar" style="background: #34a853;">JP</div>
+                            <div class="g-reviewer">
+                                <strong>Juha P.</strong>
+                                <span>8 kuukautta sitten</span>
+                            </div>
+                            <svg class="g-logo" width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                        </div>
+                        <div class="g-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <svg class="g-verified" width="14" height="14" viewBox="0 0 24 24" fill="#4285F4"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
+                        <p class="g-text">Ilmalämpöpumpun asennus sujui todella nopeasti. Selkeät ohjeet käyttöön ja jälkiseuranta toimi hyvin. Hyvä palvelu!</p>
+                    </div>
+
+                    <div class="google-review-card">
+                        <div class="g-review-header">
+                            <div class="g-avatar" style="background: #fbbc05; color: #333;">TH</div>
+                            <div class="g-reviewer">
+                                <strong>Tiina H.</strong>
+                                <span>3 kuukautta sitten</span>
+                            </div>
+                            <svg class="g-logo" width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                        </div>
+                        <div class="g-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <svg class="g-verified" width="14" height="14" viewBox="0 0 24 24" fill="#4285F4"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
+                        <p class="g-text">Aurinkopaneelien asennus meni todella ammattimaisesti. Kaikki toimii moitteettomasti ja sähkölasku pieneni huomattavasti.</p>
+                    </div>
+
+                    <div class="google-review-card">
+                        <div class="g-review-header">
+                            <div class="g-avatar" style="background: #673ab7;">KV</div>
+                            <div class="g-reviewer">
+                                <strong>Kimmo V.</strong>
+                                <span>2 kuukautta sitten</span>
+                            </div>
+                            <svg class="g-logo" width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                        </div>
+                        <div class="g-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <svg class="g-verified" width="14" height="14" viewBox="0 0 24 24" fill="#4285F4"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
+                        <p class="g-text">Hommat sujui ammattitaidolla ja nopeasti. Meidän sähkömies jatkossakin. Suosittelen!</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-btn carousel-next" id="reviewNext" aria-label="Seuraava">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="ukk">
+    <div class="container">
+        <div class="section-header" data-animate>
+            <span class="section-tag">UKK</span>
+            <h2>Kysymyksiä? <span class="text-gradient">Vastauksia.</span></h2>
+        </div>
+        <div class="faq-list" data-animate>
+            <details class="faq-item"><summary>Kuinka nopeasti pääsette paikalle?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary><div class="faq-answer"><p>Pyrimme reagoimaan yhteydenottoihin 24 tunnin sisällä. Kiireellisissä tapauksissa voimme usein tulla paikan päälle hyvinkin nopeasti.</p></div></details>
+            <details class="faq-item"><summary>Mitä alueita palvelette?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary><div class="faq-answer"><p>Pääasiallinen toimialueemme kattaa Siilinjärven ja Kuopion seudun, mutta palvelemme myös laajemmin Pohjois-Savon alueella: Nilsiä, Lapinlahti, Leppävirta, Suonenjoki ja Iisalmi.</p></div></details>
+            <details class="faq-item"><summary>Saanko kotitalousvähennyksen?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary><div class="faq-answer"><p>Kyllä! Sähköasennustyöt ovat kotitalousvähennyskelpoisia – merkittävä säästö verotuksessa.</p></div></details>
+            <details class="faq-item"><summary>Teettekö myös pieniä töitä?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary><div class="faq-answer"><p>Ehdottomasti! Pistorasian asennuksesta koko talon sähkösaneeraukseen – mikään työ ei ole liian pieni tai suuri.</p></div></details>
+            <details class="faq-item"><summary>Onko tarjouksen pyytäminen maksullista?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary><div class="faq-answer"><p>Ei! Tarjous on aina maksuton ja sitoumukseton. Kerro vain tarpeestasi niin laadimme tarjouksen.</p></div></details>
+        </div>
+    </div>
+</section>
+
+<!-- Contact / CTA -->
+<section class="contact-section" id="yhteystiedot">
+    <div class="container">
+        <div class="contact-layout">
+            <div class="contact-info" data-animate>
+                <span class="section-tag">Yhteystiedot</span>
+                <h2>Ota <span class="text-gradient">yhteyttä</span></h2>
+                <p class="contact-desc">Vastaamme yhteydenottoihin arkisin 24 tunnin sisällä. Kiireellisissä tapauksissa soita suoraan.</p>
+                <div class="contact-items">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                        </div>
+                        <div><strong>Puhelin</strong><a href="tel:+358XXXXXXXXX">Soita meille</a></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        </div>
+                        <div><strong>Sähköposti</strong><a href="mailto:info@savomega.fi">info@savomega.fi</a></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        </div>
+                        <div><strong>Toimipaikka</strong><span>Siilinjärvi, Pohjois-Savo</span></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <div><strong>Palveluajat</strong><span>Ma-Pe 7:00 - 17:00</span></div>
+                    </div>
+                </div>
+                <div class="company-badge">
+                    <strong>SavoMega Service Ky</strong>
+                    <span>Y-tunnus: 2870399-8</span>
+                </div>
+            </div>
+            <div class="contact-form-wrapper" id="tarjous" data-animate>
+                <h3>Pyydä maksuton tarjous</h3>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Nimi *</label>
+                        <input type="text" id="name" name="name" required placeholder="Nimesi">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Sähköposti *</label>
+                            <input type="email" id="email" name="email" required placeholder="sahkoposti@esimerkki.fi">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Puhelinnumero</label>
+                            <input type="tel" id="phone" name="phone" placeholder="04X XXX XXXX">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Palvelu</label>
+                        <select id="service" name="service">
+                            <option value="">Valitse palvelu</option>
+                            <option value="kodin-sahkotyot">Kodin sähkötyöt</option>
+                            <option value="sahkosaneeraus">Sähkösaneeraus</option>
+                            <option value="ilmalampopumppu">Ilmalämpöpumppu</option>
+                            <option value="aurinkosahko">Aurinkosähkö</option>
+                            <option value="vianetsinta">Vianetsintä & huolto</option>
+                            <option value="sahkoauton-lataus">Sähköauton latausasema</option>
+                            <option value="muu">Muu palvelu</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Viesti *</label>
+                        <textarea id="message" name="message" rows="4" required placeholder="Kerro tarkemmin, millaista sähkötyötä tarvitset..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <span>Lähetä tarjouspyyntö</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                        <span class="btn-shimmer"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final-cta">
+    <div class="final-cta-bg"></div>
+    <div class="container final-cta-content" data-animate>
+        <h2>Tarvitsetko sähkömiestä?</h2>
+        <p>Pyydä maksuton ja sitoumukseton tarjous. Vastaamme yhteydenottoihin nopeasti!</p>
+        <div class="final-cta-buttons">
+            <a href="#tarjous" class="btn-hero-primary large">
+                Pyydä tarjous
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <span class="btn-shimmer"></span>
+            </a>
+            <a href="mailto:info@savomega.fi" class="btn-hero-outline">info@savomega.fi</a>
+        </div>
+        <p class="final-note">Maksuton tarjous &middot; Ei velvoitteita &middot; Nopea reagointi</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="footer-brand">
+            <div class="logo"><span class="logo-icon">&#9889;</span><div class="logo-text">Savo<span>Mega</span></div></div>
+            <p>Ammattitaitoinen sähköurakoitsija Siilinjärven ja Kuopion seudulla. Luotettavaa palvelua kaikenlaisiin sähkötarpeisiin.</p>
+        </div>
+        <div class="footer-links"><h4>Palvelut</h4><a href="#palvelut">Kodin sähkötyöt</a><a href="#palvelut">Sähkösaneeraus</a><a href="#palvelut">Ilmalämpöpumput</a><a href="#palvelut">Aurinkosähkö</a></div>
+        <div class="footer-links"><h4>Yhteystiedot</h4><a href="tel:+358XXXXXXXXX">Soita meille</a><a href="mailto:info@savomega.fi">info@savomega.fi</a><span>Siilinjärvi, Pohjois-Savo</span><span>Y-tunnus: 2870399-8</span></div>
+    </div>
+    <div class="container footer-bottom"><p>&copy; 2026 SavoMega Service Ky.</p></div>
+</footer>
+
+<!-- Floating Mobile CTA -->
+<div class="floating-cta">
+    <a href="#tarjous" class="floating-btn">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Pyydä tarjous
+    </a>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
