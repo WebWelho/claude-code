@@ -8,6 +8,7 @@ on:
       - 'claude/**'
     paths:
       - '*-website/**'
+      - 'docs/**'
       - '.github/workflows/deploy-websites.yml'
 
   # Mahdollistaa manuaalisen ajon
@@ -50,7 +51,12 @@ jobs:
             cp -r "$dir" "_site/$dir"
           done
 
-          # Generate the portfolio index page
+          # Use docs/index.html as portal if it exists
+          if [ -f docs/index.html ]; then
+            echo "Using docs/index.html as portal page"
+            cp docs/index.html _site/index.html
+          else
+            # Generate the portfolio index page
           cat > _site/index.html << 'INDEXEOF'
           <!DOCTYPE html>
           <html lang="fi">
@@ -274,6 +280,7 @@ jobs:
 
           sed -i "s|__SITES_JSON__|$SITES_JSON|g" _site/index.html
           echo "Built _site/ with sites: $SITES_JSON"
+          fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
