@@ -4,7 +4,7 @@ const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-const MODEL = 'claude-haiku-4-5-20251001';
+const MODEL = 'claude-opus-4-6';
 
 // System prompt for building inspection context
 const INSPECTION_SYSTEM_PROMPT = `Avustat rakennustarkastajaa muotoilemaan kenttähavainnot kirjalliseen raporttiformaattiin.
@@ -18,6 +18,7 @@ export async function transcribeAndProfessionalize(rawText: string, category: st
   const stream = await client.messages.stream({
     model: MODEL,
     max_tokens: 1024,
+    thinking: { type: 'adaptive' },
     system: INSPECTION_SYSTEM_PROMPT,
     messages: [{
       role: 'user',
@@ -43,6 +44,7 @@ export async function addTechnicalTheory(observation: string, category: string):
   const stream = await client.messages.stream({
     model: MODEL,
     max_tokens: 2048,
+    thinking: { type: 'adaptive' },
     system: INSPECTION_SYSTEM_PROMPT,
     messages: [{
       role: 'user',
@@ -118,6 +120,7 @@ export async function generateFindingsSummary(observations: Array<{
   const stream = await client.messages.stream({
     model: MODEL,
     max_tokens: 3000,
+    thinking: { type: 'adaptive' },
     system: INSPECTION_SYSTEM_PROMPT,
     messages: [{
       role: 'user',
@@ -179,6 +182,7 @@ export async function generateFinalSummary(reportData: {
   const stream = await client.messages.stream({
     model: MODEL,
     max_tokens: 5000,
+    thinking: { type: 'adaptive' },
     system: INSPECTION_SYSTEM_PROMPT,
     messages: [{
       role: 'user',
@@ -242,6 +246,7 @@ export async function streamProcessObservation(
   const stream = await client.messages.stream({
     model: MODEL,
     max_tokens: 2048,
+    thinking: { type: 'adaptive' },
     system: INSPECTION_SYSTEM_PROMPT,
     messages: [{
       role: 'user',
