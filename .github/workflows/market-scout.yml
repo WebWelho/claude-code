@@ -44,12 +44,9 @@ jobs:
       - name: Read topics configuration
         id: config
         run: |
-          CONFIG=$(cat plugins/market-scout/config/topics.json)
-          echo "config=$CONFIG" >> $GITHUB_OUTPUT
-
           # Extract topic IDs for parallel processing
-          TOPIC_IDS=$(echo "$CONFIG" | node -e "
-            const data = JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8'));
+          TOPIC_IDS=$(node -e "
+            const data = JSON.parse(require('fs').readFileSync('plugins/market-scout/config/topics.json', 'utf8'));
             const topic = '${{ inputs.topic }}';
             const topics = topic
               ? data.topics.filter(t => t.id === topic && t.active)
