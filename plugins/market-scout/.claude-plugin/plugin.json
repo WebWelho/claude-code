@@ -1,0 +1,22 @@
+{
+  "name": "market-scout",
+  "version": "1.0.0",
+  "description": "Automated business intelligence and market opportunity scanner. Continuously monitors AI tools, DevTools, and tech trends — with special focus on finding international solutions not yet available in Finland.",
+  "author": "WebWelho",
+  "category": "productivity",
+  "agents": [
+    "agents/topic-researcher.md",
+    "agents/finland-opportunity-scanner.md",
+    "agents/trend-analyzer.md",
+    "agents/report-compiler.md"
+  ],
+  "commands": [
+    "commands/scout.md",
+    "commands/add-topic.md",
+    "commands/view-reports.md"
+  ],
+  "skills": [
+    "skills/market-research.md"
+  ],
+  "hooks": "hooks/hooks.json"
+}

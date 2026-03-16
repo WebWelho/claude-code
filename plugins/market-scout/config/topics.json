@@ -1,0 +1,52 @@
+{
+  "topics": [
+    {
+      "id": "ai-tools",
+      "name": "AI Tools & Integrations",
+      "keywords": [
+        "AI productivity tools",
+        "LLM tools business",
+        "AI workflow automation",
+        "AI SaaS launch",
+        "generative AI business tools",
+        "AI agent platform"
+      ],
+      "focus": "business tools and productivity",
+      "active": true
+    },
+    {
+      "id": "devtools",
+      "name": "Software Development & DevTools",
+      "keywords": [
+        "developer tools 2026",
+        "no-code low-code platform",
+        "DevOps automation tools",
+        "IDE plugin launch",
+        "code generation tools",
+        "developer productivity software"
+      ],
+      "focus": "developer productivity and tooling",
+      "active": true
+    }
+  ],
+  "finland_context": {
+    "check_competitors": true,
+    "market_size_threshold": "SMB",
+    "languages_to_monitor": ["English", "Swedish", "Estonian"],
+    "competitor_search_terms": ["Finland", "Suomi", "Finnish market", "suomalaiset"],
+    "target_sectors": ["B2B SaaS", "Professional services", "Tech startups"]
+  },
+  "report_settings": {
+    "create_github_issue": false,
+    "email_digest": true,
+    "email_recipient": "CONFIGURE_YOUR_EMAIL_HERE",
+    "min_opportunity_score": 6,
+    "max_opportunities_in_report": 5,
+    "report_language": "English"
+  },
+  "schedule": {
+    "runs_per_day": 4,
+    "times_utc": ["04:00", "10:00", "16:00", "22:00"],
+    "timezone_display": "Europe/Helsinki"
+  }
+}

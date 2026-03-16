@@ -145,6 +145,16 @@
       },
       "source": "./plugins/security-guidance",
       "category": "security"
+    },
+    {
+      "name": "market-scout",
+      "description": "Automated business intelligence and market opportunity scanner. Continuously monitors AI tools, DevTools, and tech trends — with special focus on finding international solutions not yet available in Finland. Runs 24/7 via GitHub Actions scheduled workflows.",
+      "version": "1.0.0",
+      "author": {
+        "name": "WebWelho"
+      },
+      "source": "./plugins/market-scout",
+      "category": "productivity"
     }
   ]
 }
