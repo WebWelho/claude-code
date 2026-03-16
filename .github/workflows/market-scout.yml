@@ -2,9 +2,10 @@ name: Market Scout — Automated Business Intelligence
 
 on:
   schedule:
-    # Runs once daily: 08:00 Finnish time (UTC+2/+3)
-    # UTC time: 06:00
-    - cron: '0 6 * * *'
+    # Runs 2x daily: 09:00 and 15:00 Finnish time (UTC+2 winter)
+    # UTC times: 07:00, 13:00
+    - cron: '0 7 * * *'
+    - cron: '0 13 * * *'
   workflow_dispatch:
     inputs:
       topic:
