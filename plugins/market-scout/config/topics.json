@@ -45,8 +45,8 @@
     "report_language": "English"
   },
   "schedule": {
-    "runs_per_day": 4,
-    "times_utc": ["04:00", "10:00", "16:00", "22:00"],
+    "runs_per_day": 1,
+    "times_utc": ["06:00"],
     "timezone_display": "Europe/Helsinki"
   }
 }
