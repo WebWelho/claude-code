@@ -73,7 +73,7 @@ jobs:
               console.log(JSON.stringify(topic));
             ")
 
-            claude --print \
+            claude --print --dangerously-skip-permissions \
               --system-prompt "$(cat plugins/market-scout/agents/topic-researcher.md)" \
               "Research this topic and return structured JSON findings. Topic data: $TOPIC_DATA. Search for the latest news, product launches, and developments in this area from the last 48 hours. Return valid JSON only." \
               > /tmp/market-scout-data/research-$TOPIC_ID.json 2>&1 || echo '{"topic":"'$TOPIC_ID'","findings":[],"error":"Research failed"}' > /tmp/market-scout-data/research-$TOPIC_ID.json
@@ -90,7 +90,7 @@ jobs:
           ALL_RESEARCH=$(cat /tmp/market-scout-data/research-*.json 2>/dev/null | tr '\n' ' ' || echo '[]')
           TOPICS_CONFIG=$(cat plugins/market-scout/config/topics.json)
 
-          claude --print \
+          claude --print --dangerously-skip-permissions \
             --system-prompt "$(cat plugins/market-scout/agents/finland-opportunity-scanner.md)" \
             "Analyze these topic areas for Finland market opportunities. Topics config: $TOPICS_CONFIG. Recent research context: $ALL_RESEARCH. Find international products/tools not yet in Finland and return structured JSON." \
             > /tmp/market-scout-data/finland-opportunities.json 2>&1 || echo '{"opportunities":[],"error":"Scan failed"}' > /tmp/market-scout-data/finland-opportunities.json
@@ -104,7 +104,7 @@ jobs:
         run: |
           ALL_DATA=$(cat /tmp/market-scout-data/*.json 2>/dev/null | tr '\n' ' ' || echo '{}')
 
-          claude --print \
+          claude --print --dangerously-skip-permissions \
             --system-prompt "$(cat plugins/market-scout/agents/trend-analyzer.md)" \
             "Analyze these research findings for trends and patterns. Data: $ALL_DATA. Return structured JSON trend analysis." \
             > /tmp/market-scout-data/trends.json 2>&1 || echo '{"hot_trends":[],"error":"Analysis failed"}' > /tmp/market-scout-data/trends.json
@@ -120,7 +120,7 @@ jobs:
           CURRENT_DATE=$(TZ='Europe/Helsinki' date '+%Y-%m-%d %H:%M')
           REPORT_FILE="reports/$(TZ='Europe/Helsinki' date '+%Y-%m-%d-%H%M').md"
 
-          REPORT=$(claude --print \
+          REPORT=$(claude --print --dangerously-skip-permissions \
             --system-prompt "$(cat plugins/market-scout/agents/report-compiler.md)" \
             "Compile a market intelligence report from this data. Current Finnish time: $CURRENT_DATE. Data: $ALL_DATA. Return a complete markdown report." \
             2>&1)
