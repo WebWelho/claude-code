@@ -152,11 +152,20 @@ jobs:
           node plugins/market-scout/scripts/build-dashboard.js
           echo "Dashboard: $(wc -c < docs/market-scout.html) tavua"
 
-      - name: Commit Reports and Dashboard
+      - name: Push Dashboard to Obsidian Vault
+        if: always()
+        run: |
+          cp docs/market-scout.html /tmp/vault/Market\ Scout/_dashboard.html
+          cd /tmp/vault
+          git add "Market Scout/_dashboard.html"
+          git commit -m "dashboard: $(TZ='Europe/Helsinki' date '+%Y-%m-%d %H:%M')" || echo "No changes"
+          git push
+
+      - name: Commit Reports
         if: always()
         run: |
           git config user.email "market-scout@github-actions"
           git config user.name "Market Scout Bot"
-          git add docs/market-scout.html reports/
-          git diff --staged --quiet || git commit -m "dashboard: $(TZ='Europe/Helsinki' date '+%Y-%m-%d %H:%M')"
+          git add reports/
+          git diff --staged --quiet || git commit -m "reports: $(TZ='Europe/Helsinki' date '+%Y-%m-%d %H:%M')"
           git push
