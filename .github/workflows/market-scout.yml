@@ -38,9 +38,6 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Claude Code CLI
-        run: npm install -g @anthropic-ai/claude-code
-
       - name: Read topics configuration
         id: config
         run: |
@@ -53,12 +50,54 @@ jobs:
           echo "topic_ids=$TOPIC_IDS" >> $GITHUB_OUTPUT
           echo "Topics to scan: $TOPIC_IDS"
 
-      - name: Run Topic Researchers (parallel)
+      - name: Run Topic Researchers
         id: research
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           mkdir -p /tmp/market-scout-data
+
+          call_claude() {
+            local SYSTEM_PROMPT="$1"
+            local USER_MSG="$2"
+            local OUT_FILE="$3"
+
+            PAYLOAD=$(node -e "
+              const sys = process.env.SYS_PROMPT;
+              const usr = process.env.USR_MSG;
+              console.log(JSON.stringify({
+                model: 'claude-opus-4-5',
+                max_tokens: 4096,
+                system: sys,
+                messages: [{ role: 'user', content: usr }]
+              }));
+            " SYS_PROMPT="$SYSTEM_PROMPT" USR_MSG="$USER_MSG")
+
+            HTTP_CODE=$(curl -s -o "$OUT_FILE" -w "%{http_code}" \
+              https://api.anthropic.com/v1/messages \
+              -H "x-api-key: $ANTHROPIC_API_KEY" \
+              -H "anthropic-version: 2023-06-01" \
+              -H "content-type: application/json" \
+              -d "$PAYLOAD")
+
+            echo "HTTP $HTTP_CODE for $OUT_FILE"
+
+            if [ "$HTTP_CODE" != "200" ]; then
+              echo "API call failed with HTTP $HTTP_CODE"
+              cat "$OUT_FILE"
+              return 1
+            fi
+
+            # Extract text content from response
+            node -e "
+              const resp = JSON.parse(require('fs').readFileSync('$OUT_FILE', 'utf8'));
+              const text = resp.content && resp.content[0] && resp.content[0].text ? resp.content[0].text : JSON.stringify(resp);
+              require('fs').writeFileSync('$OUT_FILE', text);
+            "
+          }
+
+          TOPIC_RESEARCHER=$(cat plugins/market-scout/agents/topic-researcher.md)
+
           for TOPIC_ID in ${{ steps.config.outputs.topic_ids }}; do
             echo "Researching topic: $TOPIC_ID"
             TOPIC_DATA=$(node -e "
@@ -66,12 +105,10 @@ jobs:
               const topic = data.topics.find(t => t.id === '$TOPIC_ID');
               console.log(JSON.stringify(topic));
             ")
-            claude --print --dangerously-skip-permissions \
-              --system-prompt "$(cat plugins/market-scout/agents/topic-researcher.md)" \
-              "Research this topic and return structured JSON findings. Topic data: $TOPIC_DATA. Return valid JSON only." \
-              > /tmp/market-scout-data/research-$TOPIC_ID.json 2>&1 \
-              || echo '{"topic":"'$TOPIC_ID'","findings":[],"error":"Research failed"}' \
-                > /tmp/market-scout-data/research-$TOPIC_ID.json
+            call_claude "$TOPIC_RESEARCHER" \
+              "Research this topic and return structured JSON findings. Topic data: $TOPIC_DATA. Search for the latest news, product launches, and developments. Return valid JSON only." \
+              "/tmp/market-scout-data/research-$TOPIC_ID.json" \
+              || echo '{"topic":"'$TOPIC_ID'","findings":[],"error":"Research failed"}' > "/tmp/market-scout-data/research-$TOPIC_ID.json"
             echo "Research for $TOPIC_ID completed"
           done
 
@@ -80,28 +117,86 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
+          call_claude() {
+            local SYSTEM_PROMPT="$1"
+            local USER_MSG="$2"
+            local OUT_FILE="$3"
+            PAYLOAD=$(node -e "
+              const sys = process.env.SYS_PROMPT;
+              const usr = process.env.USR_MSG;
+              console.log(JSON.stringify({
+                model: 'claude-opus-4-5',
+                max_tokens: 4096,
+                system: sys,
+                messages: [{ role: 'user', content: usr }]
+              }));
+            " SYS_PROMPT="$SYSTEM_PROMPT" USR_MSG="$USER_MSG")
+            HTTP_CODE=$(curl -s -o "$OUT_FILE" -w "%{http_code}" \
+              https://api.anthropic.com/v1/messages \
+              -H "x-api-key: $ANTHROPIC_API_KEY" \
+              -H "anthropic-version: 2023-06-01" \
+              -H "content-type: application/json" \
+              -d "$PAYLOAD")
+            echo "HTTP $HTTP_CODE for $OUT_FILE"
+            if [ "$HTTP_CODE" != "200" ]; then cat "$OUT_FILE"; return 1; fi
+            node -e "
+              const resp = JSON.parse(require('fs').readFileSync('$OUT_FILE', 'utf8'));
+              const text = resp.content && resp.content[0] ? resp.content[0].text : JSON.stringify(resp);
+              require('fs').writeFileSync('$OUT_FILE', text);
+            "
+          }
+
           ALL_RESEARCH=$(cat /tmp/market-scout-data/research-*.json 2>/dev/null | tr '\n' ' ' || echo '[]')
           TOPICS_CONFIG=$(cat plugins/market-scout/config/topics.json)
-          claude --print --dangerously-skip-permissions \
-            --system-prompt "$(cat plugins/market-scout/agents/finland-opportunity-scanner.md)" \
-            "Analyze these topic areas for Finland market opportunities. Topics config: $TOPICS_CONFIG. Recent research context: $ALL_RESEARCH. Find international products/tools not yet in Finland and return structured JSON." \
-            > /tmp/market-scout-data/finland-opportunities.json 2>&1 \
-            || echo '{"opportunities":[],"error":"Scan failed"}' \
-              > /tmp/market-scout-data/finland-opportunities.json
-          echo "Finland opportunity scan completed"
+          SCANNER=$(cat plugins/market-scout/agents/finland-opportunity-scanner.md)
+
+          call_claude "$SCANNER" \
+            "Analyze these topic areas for Finland market opportunities. Topics config: $TOPICS_CONFIG. Recent research: $ALL_RESEARCH. Return structured JSON." \
+            "/tmp/market-scout-data/finland-opportunities.json" \
+            || echo '{"opportunities":[],"error":"Scan failed"}' > /tmp/market-scout-data/finland-opportunities.json
+          echo "Finland scan completed"
 
       - name: Run Trend Analyzer
         id: trends
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
+          call_claude() {
+            local SYSTEM_PROMPT="$1"
+            local USER_MSG="$2"
+            local OUT_FILE="$3"
+            PAYLOAD=$(node -e "
+              const sys = process.env.SYS_PROMPT;
+              const usr = process.env.USR_MSG;
+              console.log(JSON.stringify({
+                model: 'claude-opus-4-5',
+                max_tokens: 4096,
+                system: sys,
+                messages: [{ role: 'user', content: usr }]
+              }));
+            " SYS_PROMPT="$SYSTEM_PROMPT" USR_MSG="$USER_MSG")
+            HTTP_CODE=$(curl -s -o "$OUT_FILE" -w "%{http_code}" \
+              https://api.anthropic.com/v1/messages \
+              -H "x-api-key: $ANTHROPIC_API_KEY" \
+              -H "anthropic-version: 2023-06-01" \
+              -H "content-type: application/json" \
+              -d "$PAYLOAD")
+            echo "HTTP $HTTP_CODE for $OUT_FILE"
+            if [ "$HTTP_CODE" != "200" ]; then cat "$OUT_FILE"; return 1; fi
+            node -e "
+              const resp = JSON.parse(require('fs').readFileSync('$OUT_FILE', 'utf8'));
+              const text = resp.content && resp.content[0] ? resp.content[0].text : JSON.stringify(resp);
+              require('fs').writeFileSync('$OUT_FILE', text);
+            "
+          }
+
           ALL_DATA=$(cat /tmp/market-scout-data/*.json 2>/dev/null | tr '\n' ' ' || echo '{}')
-          claude --print --dangerously-skip-permissions \
-            --system-prompt "$(cat plugins/market-scout/agents/trend-analyzer.md)" \
-            "Analyze these research findings for trends and patterns. Data: $ALL_DATA. Return structured JSON trend analysis." \
-            > /tmp/market-scout-data/trends.json 2>&1 \
-            || echo '{"hot_trends":[],"error":"Analysis failed"}' \
-              > /tmp/market-scout-data/trends.json
+          ANALYZER=$(cat plugins/market-scout/agents/trend-analyzer.md)
+
+          call_claude "$ANALYZER" \
+            "Analyze these research findings for trends and patterns. Data: $ALL_DATA. Return structured JSON." \
+            "/tmp/market-scout-data/trends.json" \
+            || echo '{"hot_trends":[],"error":"Analysis failed"}' > /tmp/market-scout-data/trends.json
           echo "Trend analysis completed"
 
       - name: Compile Report
@@ -109,17 +204,50 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
+          call_claude() {
+            local SYSTEM_PROMPT="$1"
+            local USER_MSG="$2"
+            local OUT_FILE="$3"
+            PAYLOAD=$(node -e "
+              const sys = process.env.SYS_PROMPT;
+              const usr = process.env.USR_MSG;
+              console.log(JSON.stringify({
+                model: 'claude-opus-4-5',
+                max_tokens: 8192,
+                system: sys,
+                messages: [{ role: 'user', content: usr }]
+              }));
+            " SYS_PROMPT="$SYSTEM_PROMPT" USR_MSG="$USER_MSG")
+            HTTP_CODE=$(curl -s -o "$OUT_FILE" -w "%{http_code}" \
+              https://api.anthropic.com/v1/messages \
+              -H "x-api-key: $ANTHROPIC_API_KEY" \
+              -H "anthropic-version: 2023-06-01" \
+              -H "content-type: application/json" \
+              -d "$PAYLOAD")
+            echo "HTTP $HTTP_CODE for $OUT_FILE"
+            if [ "$HTTP_CODE" != "200" ]; then cat "$OUT_FILE"; return 1; fi
+            node -e "
+              const resp = JSON.parse(require('fs').readFileSync('$OUT_FILE', 'utf8'));
+              const text = resp.content && resp.content[0] ? resp.content[0].text : JSON.stringify(resp);
+              require('fs').writeFileSync('$OUT_FILE', text);
+            "
+          }
+
           ALL_DATA=$(cat /tmp/market-scout-data/*.json 2>/dev/null | tr '\n' ' ' || echo '{}')
           CURRENT_DATE=$(TZ='Europe/Helsinki' date '+%Y-%m-%d %H:%M')
           REPORT_FILE="reports/$(TZ='Europe/Helsinki' date '+%Y-%m-%d-%H%M').md"
           mkdir -p reports
-          claude --print --dangerously-skip-permissions \
-            --system-prompt "$(cat plugins/market-scout/agents/report-compiler.md)" \
-            "Compile a market intelligence report from this data. Current Finnish time: $CURRENT_DATE. Data: $ALL_DATA. Return a complete markdown report." \
-            > "$REPORT_FILE" 2>&1 \
-            || printf '# Market Scout Report\n\n*Report generation failed*\n' > "$REPORT_FILE"
+          COMPILER=$(cat plugins/market-scout/agents/report-compiler.md)
+
+          call_claude "$COMPILER" \
+            "Compile a market intelligence report. Current Finnish time: $CURRENT_DATE. Data: $ALL_DATA. Return complete markdown report." \
+            "$REPORT_FILE" \
+            || printf '# Market Scout Report\n\n**Date:** %s\n\n*Report generation failed — check API key and logs.*\n' "$CURRENT_DATE" > "$REPORT_FILE"
+
           echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
           echo "Report saved to: $REPORT_FILE"
+          echo "--- Report preview (first 20 lines) ---"
+          head -20 "$REPORT_FILE"
 
       - name: Push Report to Obsidian Vault
         run: |
@@ -142,12 +270,13 @@ jobs:
           HIGH_PRIORITY=$(cat /tmp/market-scout-data/finland-opportunities.json 2>/dev/null | \
             node -e "
               try {
-                const data = JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8'));
+                const raw = require('fs').readFileSync('/dev/stdin', 'utf8');
+                const data = JSON.parse(raw);
                 const high = (data.opportunities || []).filter(o => o.opportunity_score >= 8);
                 if (high.length > 0) {
                   console.log(high.map(o => '- **' + o.product_name + '** (' + o.opportunity_score + '/10): ' + o.description).join('\n'));
                 }
-              } catch(e) { /* no output */ }
+              } catch(e) {}
             " 2>/dev/null || echo "")
           if [ -n "$HIGH_PRIORITY" ]; then
             gh issue create \
@@ -160,5 +289,5 @@ jobs:
 
           *Generated by market-scout workflow*" \
               --label "market-intel" \
-              || echo "Could not create issue (label may not exist yet)"
+              || echo "Could not create issue"
           fi
